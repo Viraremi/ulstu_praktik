@@ -12,14 +12,15 @@ def read_Amount_GS(path: str, year: int):
         'замещено',
         'количество лиц, находящихся в отпуске по уходу за ребенком'
     ]
-    m_id = pd.MultiIndex.from_product([id_SubFed, group, status], names=['id_SubFed', 'group', 'status'])
+
     df = pd.read_excel(path, sheet_name='1.1. Кол-во ГС', header=None)
-    df = df.iloc[6:20, 6:18]
+    df = df.iloc[6:20, 6:18] # Обрезаем лишнее
     df = df.drop([9, 13, 17], axis=1)
-    df = df.stack().reset_index(drop=True).to_frame()
+    df = df.stack().reset_index(drop=True).to_frame() # Складываем таблицу в одну большую строку
+    m_id = pd.MultiIndex.from_product([id_SubFed, group, status], names=['id_SubFed', 'group', 'status']) # Формируем и присваиваем мультииндекс
     df = df.set_axis(m_id, axis=0)
+    df.insert(0, 'year', year) # Добавляем колонку "год"
     df = df.rename(columns={0: 'amount'})
-    df.insert(0, 'year', year)
     df.to_csv('Amount_GS.csv', sep=';')
 
 def read_Amount_MS(path: str, year: int):
@@ -33,14 +34,15 @@ def read_Amount_MS(path: str, year: int):
         'замещено',
         'количество лиц, находящихся в отпуске по уходу за ребенком'
     ]
-    m_id = pd.MultiIndex.from_product([id_SubFed, group, status], names=['id_SubFed', 'group', 'status'])
+
     df = pd.read_excel(path, sheet_name='1.2. Кол-во МС', header=None)
-    df = df.iloc[6:20, 6:14]
+    df = df.iloc[6:20, 6:14] # Обрезаем лишнее
     df = df.drop([9, 13], axis=1)
-    df = df.stack().reset_index(drop=True).to_frame()
+    df = df.stack().reset_index(drop=True).to_frame() # Складываем таблицу в одну большую строку
+    m_id = pd.MultiIndex.from_product([id_SubFed, group, status], names=['id_SubFed', 'group', 'status']) # Формируем и присваиваем мультииндекс
     df = df.set_axis(m_id, axis=0)
     df = df.rename(columns={0: 'value'})
-    df.insert(0, 'year', year)
+    df.insert(0, 'year', year) # Добавляем колонку "год"
     df.to_csv('Amount_MS.csv', sep=';')
 
 read_Amount_GS('2021.xls', 2021)
