@@ -45,5 +45,9 @@ def read_Amount_MS(path: str, year: int):
     df.insert(0, 'year', year) # Добавляем колонку "год"
     df.to_csv('Amount_MS.csv', sep=';')
 
+def read_Gender_GS(path: str, year: int):
+    id_SubFed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    #...
+
 read_Amount_GS('2021.xls', 2021)
 read_Amount_MS('2021.xls', 2021)
