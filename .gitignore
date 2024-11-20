@@ -1,4 +1,5 @@
-/CSVs/
 /.venv/
 /.ipynb_checkpoints/
 /.idea/
+/data_xlsx/
+*.csv
