@@ -21,7 +21,6 @@ Amount_GS = {
     'iloc_columns' : [6, 18],
     'drop_column' : [9, 13, 17],
     'm_id_lists' : [
-        id_SubFed,
         [
         'Численность государственных должностей субъекта Российской Федерации',
         'Численность должностей государственной гражданской службы',
@@ -34,7 +33,7 @@ Amount_GS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'group', 'status'],
-    'csv_path' : 'CSVs/Amount_GS.csv'
+    'csv_path' : 'Amount_GS.csv'
 }
 
 Amount_MS = {
@@ -43,7 +42,6 @@ Amount_MS = {
     'iloc_columns' : [6, 14],
     'drop_column' : [9, 13],
     'm_id_lists' : [
-        id_SubFed,
         [
             'Численность должностей муниципальной службы',
             'Численность должностей, не отнесенных к должностям муниципальной службы'
@@ -55,7 +53,7 @@ Amount_MS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'group', 'status'],
-    'csv_path' : 'CSVs/Amount_MS.csv'
+    'csv_path' : 'Amount_MS.csv'
 }
 
 Gender_GS = {
@@ -64,14 +62,13 @@ Gender_GS = {
     'iloc_columns' : [2, 6],
     'drop_column' : [3, 5],
     'm_id_lists' : [
-        id_SubFed,
         [
             'мужчины',
             'женщины'
         ]
         ],
     'm_id_names' : ['id_SubFed', 'gender'],
-    'csv_path' : 'CSVs/Gender_GS.csv'
+    'csv_path' : 'Gender_GS.csv'
 }
 
 Gender_MS = {
@@ -80,14 +77,13 @@ Gender_MS = {
     'iloc_columns' : [2, 6],
     'drop_column' : [3, 5],
     'm_id_lists' : [
-        id_SubFed,
         [
             'мужчины',
             'женщины'
         ]
         ],
     'm_id_names' : ['id_SubFed', 'gender'],
-    'csv_path' : 'CSVs/Gender_MS.csv'
+    'csv_path' : 'Gender_MS.csv'
 }
 
 Age_GS = {
@@ -96,7 +92,6 @@ Age_GS = {
     'iloc_columns' : [2, 13],
     'drop_column' : [3, 5, 7, 9, 11],
     'm_id_lists' : [
-        id_SubFed,
         [
             'до 30 лет',
             'от 31 до 40 лет',
@@ -107,7 +102,7 @@ Age_GS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'category'],
-    'csv_path' : 'CSVs/Age_GS.csv'
+    'csv_path' : 'Age_GS.csv'
 }
 
 Age_MS = {
@@ -116,7 +111,6 @@ Age_MS = {
     'iloc_columns' : [2, 13],
     'drop_column' : [3, 5, 7, 9, 11],
     'm_id_lists' : [
-        id_SubFed,
         [
             'до 30 лет',
             'от 31 до 40 лет',
@@ -127,7 +121,7 @@ Age_MS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'category'],
-    'csv_path' : 'CSVs/Age_MS.csv'
+    'csv_path' : 'Age_MS.csv'
 }
 
 EducationLevel_GS = {
@@ -136,7 +130,6 @@ EducationLevel_GS = {
     'iloc_columns' : [4, 21],
     'drop_column' : [5,7,9,10,11,12,13,14,15,16,17,18,19],
     'm_id_lists' : [
-        id_SubFed,
         [
             'бакалавриат',
             'специалитет',
@@ -145,7 +138,7 @@ EducationLevel_GS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'educ_lvl'],
-    'csv_path' : 'CSVs/EducationLevel_GS.csv'
+    'csv_path' : 'EducationLevel_GS.csv'
 }
 
 EducationLevel_MS = {
@@ -154,7 +147,6 @@ EducationLevel_MS = {
     'iloc_columns' : [4, 21],
     'drop_column' : [5,7,9,10,11,12,13,14,15,16,17,18,19],
     'm_id_lists' : [
-        id_SubFed,
         [
             'бакалавриат',
             'специалитет',
@@ -163,7 +155,7 @@ EducationLevel_MS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'educ_lvl'],
-    'csv_path' : 'CSVs/EducationLevel_MS.csv'
+    'csv_path' : 'EducationLevel_MS.csv'
 }
 
 Educ_spec_GS = {
@@ -172,7 +164,6 @@ Educ_spec_GS = {
     'iloc_columns' : [10, 20],
     'drop_column' : [11,13,15,17,19],
     'm_id_lists' : [
-        id_SubFed,
         [
             'менеджер ГМУ',
             'экономист, финансист',
@@ -182,7 +173,7 @@ Educ_spec_GS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'speciality'],
-    'csv_path' : 'CSVs/Educ_spec_GS.csv'
+    'csv_path' : 'Educ_spec_GS.csv'
 }
 
 Educ_spec_MS = {
@@ -191,7 +182,6 @@ Educ_spec_MS = {
     'iloc_columns' : [10, 20],
     'drop_column' : [11,13,15,17,19],
     'm_id_lists' : [
-        id_SubFed,
         [
             'менеджер ГМУ',
             'экономист, финансист',
@@ -201,7 +191,7 @@ Educ_spec_MS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'speciality'],
-    'csv_path' : 'CSVs/Educ_spec_MS.csv'
+    'csv_path' : 'Educ_spec_MS.csv'
 }
 
 AcademicDegree_GS = {
@@ -210,7 +200,6 @@ AcademicDegree_GS = {
     'iloc_columns' : [2, 7],
     'drop_column' : [3, 5],
     'm_id_lists' : [
-        id_SubFed,
         [
             'Два и более высших образования',
             'Кандидаты наук',
@@ -218,7 +207,7 @@ AcademicDegree_GS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'degree'],
-    'csv_path' : 'CSVs/AcademicDegree_GS.csv'
+    'csv_path' : 'AcademicDegree_GS.csv'
 }
 
 AcademicDegree_MS = {
@@ -227,7 +216,6 @@ AcademicDegree_MS = {
     'iloc_columns' : [2, 7],
     'drop_column' : [3, 5],
     'm_id_lists' : [
-        id_SubFed,
         [
             'Два и более высших образования',
             'Кандидаты наук',
@@ -235,7 +223,7 @@ AcademicDegree_MS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'degree'],
-    'csv_path' : 'CSVs/AcademicDegree_MS.csv'
+    'csv_path' : 'AcademicDegree_MS.csv'
 }
 
 Exp_GS = {
@@ -244,7 +232,6 @@ Exp_GS = {
     'iloc_columns' : [2, 11],
     'drop_column' : [3,5,7,9],
     'm_id_lists' : [
-        id_SubFed,
         [
             'до 1 года',
             'от 1 года до 5 лет',
@@ -254,7 +241,7 @@ Exp_GS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'category'],
-    'csv_path' : 'CSVs/Exp_GS.csv'
+    'csv_path' : 'Exp_GS.csv'
 }
 
 Exp_MS = {
@@ -263,7 +250,6 @@ Exp_MS = {
     'iloc_columns' : [2, 11],
     'drop_column' : [3,5,7,9],
     'm_id_lists' : [
-        id_SubFed,
         [
             'до 1 года',
             'от 1 года до 5 лет',
@@ -273,7 +259,7 @@ Exp_MS = {
         ]
         ],
     'm_id_names' : ['id_SubFed', 'category'],
-    'csv_path' : 'CSVs/Exp_MS.csv'
+    'csv_path' : 'Exp_MS.csv'
 }
 
 Changeability_GS = {
@@ -282,7 +268,6 @@ Changeability_GS = {
     'iloc_columns': [4, 16],
     'drop_column': [5,7,9,11],
     'm_id_lists': [
-        id_SubFed,
         [
             'Уволены на отчетную дату по инициативе служащего',
             'Уволены на отчетную дату по инициативе представителя нанимателя ',
@@ -295,7 +280,7 @@ Changeability_GS = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/Changeability_GS.csv'
+    'csv_path': 'Changeability_GS.csv'
 }
 
 GosOrgAmount = {
@@ -304,14 +289,13 @@ GosOrgAmount = {
     'iloc_columns': [2, 4],
     'drop_column': [],
     'm_id_lists': [
-        id_SubFed,
         [
             'Количество государственных органов на отчетную дату',
             'Количество государственных органов на последнюю дату отчета предыдущего года'
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/GosOrgAmount.csv'
+    'csv_path': 'GosOrgAmount.csv'
 }
 
 Competition = {
@@ -320,7 +304,6 @@ Competition = {
     'iloc_columns': [2, 10],
     'drop_column': [4, 6, 8],
     'm_id_lists': [
-        id_SubFed,
         [
             'Общее количество конкурсов',
             'Конкурсы, проводимые повторно',
@@ -330,7 +313,7 @@ Competition = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/Competition.csv'
+    'csv_path': 'Competition.csv'
 }
 
 CitizenParticipation = {
@@ -339,7 +322,6 @@ CitizenParticipation = {
     'iloc_columns': [2, 17],
     'drop_column': [7, 9, 11, 13, 15],
     'm_id_lists': [
-        id_SubFed,
         [
             'подали документы на замещение вакантных должностей государственной службы',
             'в эл. виде подали документы на замещение вакантных должностей государственной службы',
@@ -354,7 +336,7 @@ CitizenParticipation = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/CitizenParticipation.csv'
+    'csv_path': 'CitizenParticipation.csv'
 }
 
 Substitution = {
@@ -363,7 +345,6 @@ Substitution = {
     'iloc_columns': [3, 17],
     'drop_column': [5,7,9,11,13,15],
     'm_id_lists': [
-        id_SubFed,
         [
             'В возрасте до 30 лет',
             'С установлением испытательного срока',
@@ -376,16 +357,15 @@ Substitution = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/Substitution.csv'
+    'csv_path': 'Substitution.csv'
 }
 
 Mentoring = {
     'sheet': '12. Наставничество',
     'iloc_rows': [7, 21],
-    'iloc_columns': [2, 14],
+    'iloc_columns': [2, 13],
     'drop_column': [4,7,9,12],
     'm_id_lists': [
-        id_SubFed,
         [
             'впервые поступившие на гос. службу',
             'впервые поступившие на гос. службу, которым назначены наставники',
@@ -393,12 +373,11 @@ Mentoring = {
             'впервые назначенных на высшие и главные должности гос. службы, которым назначены наставники',
             'иные случаи установления наставничества',
             'Назначенные наставники',
-            'Назначенные наставники, которым произведена доплата',
-            'Количество лиц, в отношении которых установленно наставничество'
+            'Назначенные наставники, которым произведена доплата'
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/Mentoring.csv'
+    'csv_path': 'Mentoring.csv'
 }
 
 ReserveComposition = {
@@ -407,7 +386,6 @@ ReserveComposition = {
     'iloc_columns': [2, 8],
     'drop_column': [3,4,6],
     'm_id_lists': [
-        id_SubFed,
         [
             'Количество государственных органов, сформировавших резерв',
             'граждан',
@@ -415,7 +393,7 @@ ReserveComposition = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'category'],
-    'csv_path': 'CSVs/ReserveComposition.csv'
+    'csv_path': 'ReserveComposition.csv'
 }
 
 ReserveCause = {
@@ -424,7 +402,6 @@ ReserveCause = {
     'iloc_columns': [9, 18],
     'drop_column': [10,12,14,16],
     'm_id_lists': [
-        id_SubFed,
         [
             'по результатам конкурса на включение в кадровый резерв',
             'по результатам конкурса на замещение вакантной должности',
@@ -434,7 +411,7 @@ ReserveCause = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'cause'],
-    'csv_path': 'CSVs/ReserveCause.csv'
+    'csv_path': 'ReserveCause.csv'
 }
 
 Attestation = {
@@ -443,7 +420,6 @@ Attestation = {
     'iloc_columns': [4, 12],
     'drop_column': [],
     'm_id_lists': [
-        id_SubFed,
         [
             'соответствуют замещаемой должности',
             'соответствуют замещаемой должности и рекомендованы к включению в кадровый резерв',
@@ -456,7 +432,7 @@ Attestation = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'result', 'period'],
-    'csv_path': 'CSVs/Attestation.csv'
+    'csv_path': 'Attestation.csv'
 }
 
 Ranks = {
@@ -465,7 +441,6 @@ Ranks = {
     'iloc_columns': [6, 17],
     'drop_column': [7,9,11,13,15],
     'm_id_lists': [
-        id_SubFed,
         [
             'присвоен классный чин, без сдачи квалификационного экзамена',
             'присвоен классный чин, по результатам квалификационного экзамена',
@@ -477,29 +452,29 @@ Ranks = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'appointmentReason', 'period'],
-    'csv_path': 'CSVs/Ranks.csv'
+    'csv_path': 'Ranks.csv'
 }
 
-TargetedTraining = {
-    'sheet': '16. Целевое обучение',
-    'iloc_rows': [5, 19],
-    'iloc_columns': [2, 9],
-    'drop_column':[7],
-    'm_id_lists': [
-        id_SubFed,
-        [
-            'Количество граждан, заключивших договор о целевом обучении',
-            'Количество граждан, получивших профессиональное образование в соответствии с договором о целевом обучении',
-            'Количество граждан, поступивших на государственную службу в соответствии с договором о целевом обучении'
-        ],
-        [
-            'АППГ',
-            'с начала отчетного года'
-        ]
-    ],
-    'm_id_names': ['id_SubFed', 'categoty', 'period'],
-    'csv_path': 'CSVs/TargetedTraining.csv'
-}
+#Эта таблица есть полько в одном файле (заполненный 2021)
+# TargetedTraining = {
+#     'sheet': '16. Целевое обучение',
+#     'iloc_rows': [5, 19],
+#     'iloc_columns': [2, 9],
+#     'drop_column':[7],
+#     'm_id_lists': [
+#         [
+#             'Количество граждан, заключивших договор о целевом обучении',
+#             'Количество граждан, получивших профессиональное образование в соответствии с договором о целевом обучении',
+#             'Количество граждан, поступивших на государственную службу в соответствии с договором о целевом обучении'
+#         ],
+#         [
+#             'АППГ',
+#             'с начала отчетного года'
+#         ]
+#     ],
+#     'm_id_names': ['id_SubFed', 'categoty', 'period'],
+#     'csv_path': 'TargetedTraining.csv'
+# }
 
 ProfDev_amount = {
     'sheet': '17.1. Профразвитие',
@@ -507,7 +482,6 @@ ProfDev_amount = {
     'iloc_columns': [4, 9],
     'drop_column':[],
     'm_id_lists': [
-        id_SubFed,
         [
             'решения представителя нанимателя',
             'по результатам аттестации',
@@ -517,7 +491,7 @@ ProfDev_amount = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'categoty'],
-    'csv_path': 'CSVs/ProfDev_amount.csv'
+    'csv_path': 'ProfDev_amount.csv'
 }
 
 ProfDev_resources = {
@@ -526,7 +500,6 @@ ProfDev_resources = {
     'iloc_columns': [2, 14],
     'drop_column': [],
     'm_id_lists': [
-        id_SubFed,
         [
             'Государственного заказа',
             'Государственного задания',
@@ -542,7 +515,124 @@ ProfDev_resources = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'resources', 'res_type', 'value_type'],
-    'csv_path': 'CSVs/ProfDev_resources.csv'
+    'csv_path': 'ProfDev_resources.csv'
+}
+
+DPO_GS_1 = {
+    'sheet': '17.3. ДПО ГС',
+    'iloc_rows': [6, 20],
+    'iloc_columns': [4, 20],
+    'drop_column': [6, 7, 8, 9, 14, 15, 16, 17],
+    'm_id_lists': [
+        [
+            'Профессиональная переподготовка',
+            'Повышение квалификации'
+        ],
+        [
+            'Количество служащих',
+            'Объём финансирования (тыс. руб.)'
+        ],
+        [
+            'план',
+            'факт'
+        ]
+    ],
+    'm_id_names': ['id_SubFed', 'DPO', 'value_type', 'value_name'],
+    'csv_path': 'DPO_GS.csv'
+}
+
+DPO_GS_2 = {
+    'sheet': '17.3. ДПО ГС',
+    'iloc_rows': [6, 20],
+    'iloc_columns': [7, 18],
+    'drop_column': [10, 11, 12, 13, 14],
+    'm_id_lists': [
+        [
+            'Профессиональная переподготовка',
+            'Повышение квалификации'
+        ],
+        [
+            'Количество служащих'
+        ],
+        [
+            'на основании государственных образовательных сертификатов ',
+            'за счет собственных средств',
+            'прошедших обучение в дистанционной форме'
+        ]
+    ],
+    'm_id_names': ['id_SubFed', 'DPO', 'value_type', 'value_name'],
+    'csv_path': 'DPO_GS.csv'
+}
+
+DPO_GS_other_1 = {
+    'sheet': '17.3. ДПО ГС',
+    'iloc_rows': [7, 21],
+    'iloc_columns': [4, 8],
+    'drop_column': [],
+    'm_id_lists': [
+        [
+            'мероприятия, направленные на получение новых знаний, умений',
+            'мероприятия, направленные на обмен опытом'
+        ],
+        [
+            'план',
+            'факт'
+        ]
+    ],
+    'm_id_names': ['id_SubFed', 'DPO_type', 'value_type'],
+    'csv_path': 'DPO_GS_other.csv'
+}
+
+DPO_GS_other_2 = {
+    'sheet': '17.3. ДПО ГС',
+    'iloc_rows': [7, 21],
+    'iloc_columns': [8, 10],
+    'drop_column': [],
+    'm_id_lists': [
+        [
+            'служебные стажировки',
+            'самообразование'
+        ],
+        [
+            'факт'
+        ]
+    ],
+    'm_id_names': ['id_SubFed', 'DPO_type', 'value_type'],
+    'csv_path': 'DPO_GS_other.csv'
+}
+
+DPO_GS_other_3 = {
+    'sheet': '17.3. ДПО ГС',
+    'iloc_rows': [7, 21],
+    'iloc_columns': [10, 12],
+    'drop_column': [],
+    'm_id_lists': [
+        [
+            'Объём финансирования, тыс.руб.'
+        ],
+        [
+            'план',
+            'факт'
+        ]
+    ],
+    'm_id_names': ['id_SubFed', 'DPO_type', 'value_type'],
+    'csv_path': 'DPO_GS_other.csv'
+}
+
+DPO_MS = {
+    'sheet' : '18. ДПО МС',
+    'iloc_rows' : [5, 19],
+    'iloc_columns' : [4, 9],
+    'drop_column' : [5, 7],
+    'm_id_lists' : [
+        [
+            'Профессиональная переподготовка',
+            'Повышение квалификации',
+            'иные образовательные программы'
+        ]
+        ],
+    'm_id_names' : ['id_SubFed', 'DPO_type'],
+    'csv_path' : 'DPO_MS.csv'
 }
 
 all_settings = {
@@ -570,11 +660,18 @@ all_settings = {
     'ReserveCause' : ReserveCause,
     'Attestation' : Attestation,
     'Ranks' : Ranks,
-    'TargetedTraining' : TargetedTraining,
+     #'TargetedTraining' : TargetedTraining,
     'ProfDev_amount' : ProfDev_amount,
-    'ProfDev_resources' : ProfDev_resources
+    'ProfDev_resources' : ProfDev_resources,
+    'DPO_GS_1' : DPO_GS_1,
+    'DPO_GS_2' : DPO_GS_2,
+    'DPO_GS_other_1' : DPO_GS_other_1,
+    'DPO_GS_other_2' : DPO_GS_other_2,
+    'DPO_GS_other_3' : DPO_GS_other_3,
+    'DPO_MS' : DPO_MS
 }
-
+print ('Генерация файла настроек...')
 json_string = json.dumps(all_settings, ensure_ascii=False, indent=4)
 with open("all_settings.json", "w", encoding="utf-8") as file:
     file.write(json_string)
+print('SUCCESS')
