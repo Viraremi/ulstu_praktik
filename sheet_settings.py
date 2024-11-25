@@ -565,7 +565,7 @@ DPO_GS_2 = {
 }
 
 DPO_GS_other_1 = {
-    'sheet': '17.3. ДПО ГС',
+    'sheet': '17.4. ДПО ГС',
     'iloc_rows': [7, 21],
     'iloc_columns': [4, 8],
     'drop_column': [],
@@ -584,7 +584,7 @@ DPO_GS_other_1 = {
 }
 
 DPO_GS_other_2 = {
-    'sheet': '17.3. ДПО ГС',
+    'sheet': '17.4. ДПО ГС',
     'iloc_rows': [7, 21],
     'iloc_columns': [8, 10],
     'drop_column': [],
@@ -602,7 +602,7 @@ DPO_GS_other_2 = {
 }
 
 DPO_GS_other_3 = {
-    'sheet': '17.3. ДПО ГС',
+    'sheet': '17.4. ДПО ГС',
     'iloc_rows': [7, 21],
     'iloc_columns': [10, 12],
     'drop_column': [],
@@ -670,6 +670,7 @@ all_settings = {
     'DPO_GS_other_3' : DPO_GS_other_3,
     'DPO_MS' : DPO_MS
 }
+
 print ('Генерация файла настроек...')
 json_string = json.dumps(all_settings, ensure_ascii=False, indent=4)
 with open("all_settings.json", "w", encoding="utf-8") as file:

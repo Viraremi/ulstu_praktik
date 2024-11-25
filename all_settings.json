@@ -900,7 +900,7 @@
         "csv_path": "DPO_GS.csv"
     },
     "DPO_GS_other_1": {
-        "sheet": "17.3. ДПО ГС",
+        "sheet": "17.4. ДПО ГС",
         "iloc_rows": [
             7,
             21
@@ -928,7 +928,7 @@
         "csv_path": "DPO_GS_other.csv"
     },
     "DPO_GS_other_2": {
-        "sheet": "17.3. ДПО ГС",
+        "sheet": "17.4. ДПО ГС",
         "iloc_rows": [
             7,
             21
@@ -955,7 +955,7 @@
         "csv_path": "DPO_GS_other.csv"
     },
     "DPO_GS_other_3": {
-        "sheet": "17.3. ДПО ГС",
+        "sheet": "17.4. ДПО ГС",
         "iloc_rows": [
             7,
             21
