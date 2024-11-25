@@ -19,7 +19,7 @@ CREATE TABLE "Amount_GS" (
 	-- Строка 6 в файле
 	-- "всего", "замещено, чел.", "количество лиц, находящихся в отпуске по уходу за ребенком"
 	"status" VARCHAR(255) NOT NULL,
-	"amount" REAL NOT NULL CHECK(значение),
+	"amount" REAL NOT NULL,
 	PRIMARY KEY("id")
 );
 
