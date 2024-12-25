@@ -50,7 +50,7 @@ def full_exel_to_csv(path:str, year, settings):
     df = df.rename(columns={0: 'amount'})
     return df
 
-def full_dpo_gs_to_csv(path: str, year: int, settings):
+def full_dpo_gs_to_csv(path: str, year, settings):
     print('\nDPO_GS')
     df1 = full_exel_to_csv(path, year, settings['DPO_GS_1'])
     df2 = full_exel_to_csv(path, year, settings['DPO_GS_2'])
@@ -58,7 +58,7 @@ def full_dpo_gs_to_csv(path: str, year: int, settings):
     result = pd.concat([df1, df2], axis=0)
     save_to_csv(result, 'CSVs/' + path[:-5] + '/DPO_GS.csv', ';')
 
-def full_dpo_gs_other_to_csv(path: str, year: int, settings):
+def full_dpo_gs_other_to_csv(path: str, year, settings):
     print('\nDPO_GS_other')
     df1 = full_exel_to_csv(path, year, settings['DPO_GS_other_1'])
     df2 = full_exel_to_csv(path, year, settings['DPO_GS_other_2'])
@@ -122,38 +122,38 @@ def ul_dpo_gs_other_to_csv(path: str, year: int, settings):
 #Основной блок
 
 ignore_sheet = [
-    # 'Amount_GS',
-    # 'Amount_MS',
-    # 'Gender_GS',
-    # 'Gender_MS',
-    # 'Age_GS',
-    # 'Age_MS',
-    # 'EducationLevel_GS',
-    # 'EducationLevel_MS',
-    # 'Educ_spec_GS',
-    # 'Educ_spec_MS',
-    # 'AcademicDegree_GS',
-    # 'AcademicDegree_MS',
-    # 'Exp_GS',
-    # 'Exp_MS',
-    # 'Changeability_GS',
-    # 'GosOrgAmount',
-    # 'Competition',
-    # 'CitizenParticipation',
-    # 'Substitution',
-    # 'Mentoring',
-    # 'ReserveComposition',
-    # 'ReserveCause',
-    # 'Attestation',
-    # 'Ranks',
-    # 'ProfDev_amount',
-    # 'ProfDev_resources',
+    'Amount_GS',
+    'Amount_MS',
+    'Gender_GS',
+    'Gender_MS',
+    'Age_GS',
+    'Age_MS',
+    'EducationLevel_GS',
+    'EducationLevel_MS',
+    'Educ_spec_GS',
+    'Educ_spec_MS',
+    'AcademicDegree_GS',
+    'AcademicDegree_MS',
+    'Exp_GS',
+    'Exp_MS',
+    'Changeability_GS',
+    'GosOrgAmount',
+    'Competition',
+    'CitizenParticipation',
+    'Substitution',
+    'Mentoring',
+    'ReserveComposition',
+    'ReserveCause',
+    'Attestation',
+    'Ranks',
+    'ProfDev_amount',
+    'ProfDev_resources',
     'DPO_GS_1',
     'DPO_GS_2',
     'DPO_GS_other_1',
     'DPO_GS_other_2',
     'DPO_GS_other_3',
-    # 'DPO_MS'
+    'DPO_MS'
 ]
 
 # Список и обработка ульяновских файлов
@@ -178,10 +178,10 @@ for file in ul_data_xlsx.items():
 #Список и обработка полноценных файлов
 print('\nОбработка полноценных файлов\n')
 full_data_xlsx = {
-    # '2020_full.xlsx' : '2020',
+    '2020_full.xlsx' : '2020',
     '2021_full_new.xlsx' : '2021',
-    # '2022_full.xlsx' : '2022',
-    # '2023_full.xlsx' : '2023',
+    '2022_full.xlsx' : '2022',
+    '2023_full.xlsx' : '2023',
 }
 for file in full_data_xlsx.items():
     print('\nОткрываем файл ' + file[0])
@@ -189,7 +189,7 @@ for file in full_data_xlsx.items():
         if data[0] in ignore_sheet: continue
         df = full_exel_to_csv(file[0], file[1], data[1])
         save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
-    # full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
-    # full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
+    full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
+    full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
 
 print('SUCCESS')
