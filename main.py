@@ -2,21 +2,6 @@ import pandas as pd
 import json
 import os
 
-# id_SubFed = ['Республика Башкортостан',
-#              'Республика Марий Эл',
-#              'Республика Мордовия',
-#              'Республика Татарстан',
-#              'Удмуртская Республика',
-#              'Чувашская Республика',
-#              'Пермский край',
-#              'Кировская область',
-#              'Нижегородская область',
-#              'Оренбургская область',
-#              'Пензенская область',
-#              'Самарская область',
-#              'Саратовская область',
-#              'Ульяновская область']
-
 id_SubFed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
 ulsk = [
@@ -35,6 +20,7 @@ def save_to_csv(dataframe, file_path, separator):
 
 with open("all_settings.json", "r", encoding="utf-8") as file:
     sheet_settings = json.load(file)
+    print("Настройки форматирования получены!")
 
 # Функции обработки для полноценных файлов
 
@@ -122,74 +108,77 @@ def ul_dpo_gs_other_to_csv(path: str, year: int, settings):
 #Основной блок
 
 ignore_sheet = [
-    'Amount_GS',
-    'Amount_MS',
-    'Gender_GS',
-    'Gender_MS',
-    'Age_GS',
-    'Age_MS',
-    'EducationLevel_GS',
-    'EducationLevel_MS',
-    'Educ_spec_GS',
-    'Educ_spec_MS',
-    'AcademicDegree_GS',
-    'AcademicDegree_MS',
-    'Exp_GS',
-    'Exp_MS',
-    'Changeability_GS',
-    'GosOrgAmount',
-    'Competition',
-    'CitizenParticipation',
-    'Substitution',
-    'Mentoring',
-    'ReserveComposition',
-    'ReserveCause',
-    'Attestation',
-    'Ranks',
-    'ProfDev_amount',
-    'ProfDev_resources',
-    'DPO_GS_1',
-    'DPO_GS_2',
-    'DPO_GS_other_1',
-    'DPO_GS_other_2',
-    'DPO_GS_other_3',
-    'DPO_MS'
+    # 'Amount_GS',
+    # 'Amount_MS',
+    # 'Gender_GS',
+    # 'Gender_MS',
+    # 'Age_GS',
+    # 'Age_MS',
+    # 'EducationLevel_GS',
+    # 'EducationLevel_MS',
+    # 'Educ_spec_GS',
+    # 'Educ_spec_MS',
+    # 'AcademicDegree_GS',
+    # 'AcademicDegree_MS',
+    # 'Exp_GS',
+    # 'Exp_MS',
+    # 'Changeability_GS',
+    # 'GosOrgAmount',
+    # 'Competition',
+    # 'CitizenParticipation',
+    # 'Substitution',
+    # 'Mentoring',
+    # 'ReserveComposition',
+    # 'ReserveCause',
+    # 'Attestation',
+    # 'Ranks',
+    # 'ProfDev_amount',
+    # 'ProfDev_resources',
+    # 'DPO_GS_1',
+    # 'DPO_GS_2',
+    # 'DPO_GS_other_1',
+    # 'DPO_GS_other_2',
+    # 'DPO_GS_other_3',
+    # 'DPO_MS'
 ]
 
 # Список и обработка ульяновских файлов
-print('\nОбработка ульяновских файлов\n')
-ul_data_xlsx = {
-    # '2019_ul.xlsx' : 2019,
-    # '2020_ul.xlsx' : 2020,
-    # '2021_ul.xlsx' : 2021,
-    # '2022_ul.xlsx' : 2022,
-    # '2023_ul.xlsx' : 2023,
-}
-for file in ul_data_xlsx.items():
-    print('\nОткрываем файл ' + file[0])
-    for data in sheet_settings.items():
-        if data[0] in ignore_sheet: continue
-        df = ul_exel_to_csv(file[0], file[1], data[1])
-        if df.size != 0:
-            save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
-    ul_dpo_gs_to_csv(file[0], file[1], sheet_settings)
-    ul_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
+if True:
+    print('\nОбработка ульяновских файлов\n')
+    ul_data_xlsx = {
+        # '2019_ul.xlsx' : 2019,
+        # '2020_ul.xlsx' : 2020,
+        # '2021_ul.xlsx' : 2021,
+        # '2022_ul.xlsx' : 2022,
+        # '2023_ul.xlsx' : 2023,
+        '2024_ul.xlsx': 2024
+    }
+    for file in ul_data_xlsx.items():
+        print('\nОткрываем файл ' + file[0])
+        for data in sheet_settings.items():
+            if data[0] in ignore_sheet: continue
+            df = ul_exel_to_csv(file[0], file[1], data[1])
+            if df.size != 0:
+                save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
+        ul_dpo_gs_to_csv(file[0], file[1], sheet_settings)
+        ul_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
 
 #Список и обработка полноценных файлов
-print('\nОбработка полноценных файлов\n')
-full_data_xlsx = {
-    '2020_full.xlsx' : '2020',
-    '2021_full_new.xlsx' : '2021',
-    '2022_full.xlsx' : '2022',
-    '2023_full.xlsx' : '2023',
-}
-for file in full_data_xlsx.items():
-    print('\nОткрываем файл ' + file[0])
-    for data in sheet_settings.items():
-        if data[0] in ignore_sheet: continue
-        df = full_exel_to_csv(file[0], file[1], data[1])
-        save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
-    full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
-    full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
+if False:
+    print('\nОбработка полноценных файлов\n')
+    full_data_xlsx = {
+        '2020_full.xlsx': '2020',
+        '2021_full_new.xlsx': '2021',
+        '2022_full.xlsx': '2022',
+        '2023_full.xlsx': '2023',
+    }
+    for file in full_data_xlsx.items():
+        print('\nОткрываем файл ' + file[0])
+        for data in sheet_settings.items():
+            if data[0] in ignore_sheet: continue
+            df = full_exel_to_csv(file[0], file[1], data[1])
+            save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
+        full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
+        full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
 
 print('SUCCESS')
