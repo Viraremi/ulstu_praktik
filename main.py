@@ -5,7 +5,7 @@ import os
 id_SubFed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
 ulsk = [
-    'Ульяновская область'
+    13
 ]
 
 # Создаем нужные папки если их нет
@@ -56,7 +56,7 @@ def full_dpo_gs_other_to_csv(path: str, year, settings):
 
 # Функции обработки для файлов только с Ульяновской областью
 
-def ul_exel_to_csv(path:str, year: int, settings):
+def ul_exel_to_csv(path:str, year, settings):
     print('Обработка ' + settings['sheet'] + '...')
     df = pd.read_excel('data_xlsx/' + path, sheet_name=settings['sheet'], header=None)
     df = df.iloc[settings['iloc_rows'][0]:settings['iloc_rows'][1], settings['iloc_columns'][0]:settings['iloc_columns'][1]] # Обрезаем лишнее
@@ -68,7 +68,7 @@ def ul_exel_to_csv(path:str, year: int, settings):
     df = df.stack().reset_index(drop=True).to_frame() # Складываем таблицу в одну большую строку
     m_id = pd.MultiIndex.from_product([ulsk] + settings['m_id_lists'], names=settings['m_id_names'])
     df = df.set_axis(m_id, axis=0) # Присваиваем мультииндекс
-    df.insert(0, 'year', year) # Добавляем колонку "год"
+    df.insert(0, 'year', year + '-01-01') # Добавляем колонку "год"
     df = df.rename(columns={0: 'amount'})
     return df
 
@@ -108,42 +108,42 @@ def ul_dpo_gs_other_to_csv(path: str, year: int, settings):
 #Основной блок
 
 ignore_sheet = [
-    # 'Amount_GS',
-    # 'Amount_MS',
-    # 'Gender_GS',
-    # 'Gender_MS',
-    # 'Age_GS',
-    # 'Age_MS',
-    # 'EducationLevel_GS',
-    # 'EducationLevel_MS',
-    # 'Educ_spec_GS',
-    # 'Educ_spec_MS',
-    # 'AcademicDegree_GS',
-    # 'AcademicDegree_MS',
-    # 'Exp_GS',
-    # 'Exp_MS',
-    # 'Changeability_GS',
-    # 'GosOrgAmount',
-    # 'Competition',
-    # 'CitizenParticipation',
-    # 'Substitution',
-    # 'Mentoring',
-    # 'ReserveComposition',
-    # 'ReserveCause',
-    # 'Attestation',
-    # 'Ranks',
-    # 'ProfDev_amount',
-    # 'ProfDev_resources',
-    # 'DPO_GS_1',
-    # 'DPO_GS_2',
-    # 'DPO_GS_other_1',
-    # 'DPO_GS_other_2',
-    # 'DPO_GS_other_3',
-    # 'DPO_MS'
+    'Amount_GS',
+    'Amount_MS',
+    'Gender_GS',
+    'Gender_MS',
+    'Age_GS',
+    'Age_MS',
+    'EducationLevel_GS',
+    'EducationLevel_MS',
+    'Educ_spec_GS',
+    'Educ_spec_MS',
+    'AcademicDegree_GS',
+    'AcademicDegree_MS',
+    'Exp_GS',
+    'Exp_MS',
+    'Changeability_GS',
+    'GosOrgAmount',
+    #'Competition',
+    'CitizenParticipation',
+    'Substitution',
+    'Mentoring',
+    'ReserveComposition',
+    'ReserveCause',
+    'Attestation',
+    'Ranks',
+    'ProfDev_amount',
+    'ProfDev_resources',
+    'DPO_GS_1',
+    'DPO_GS_2',
+    'DPO_GS_other_1',
+    'DPO_GS_other_2',
+    'DPO_GS_other_3',
+    'DPO_MS'
 ]
 
 # Список и обработка ульяновских файлов
-if True:
+if False:
     print('\nОбработка ульяновских файлов\n')
     ul_data_xlsx = {
         # '2019_ul.xlsx' : 2019,
@@ -151,7 +151,7 @@ if True:
         # '2021_ul.xlsx' : 2021,
         # '2022_ul.xlsx' : 2022,
         # '2023_ul.xlsx' : 2023,
-        '2024_ul.xlsx': 2024
+        '2024_ul.xlsx': '2024'
     }
     for file in ul_data_xlsx.items():
         print('\nОткрываем файл ' + file[0])
@@ -164,7 +164,7 @@ if True:
         ul_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
 
 #Список и обработка полноценных файлов
-if False:
+if True:
     print('\nОбработка полноценных файлов\n')
     full_data_xlsx = {
         '2020_full.xlsx': '2020',
@@ -178,7 +178,7 @@ if False:
             if data[0] in ignore_sheet: continue
             df = full_exel_to_csv(file[0], file[1], data[1])
             save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
-        full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
-        full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
+        #full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
+        #full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
 
 print('SUCCESS')
