@@ -1,5 +1,4 @@
 import pandas as pd
-import json
 import os
 
 id_SubFed = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -136,17 +135,9 @@ ignore_sheet = [
     # 'DPO_MS'
 ]
 
-def start_format():
+def start_format(sheet_settings, mode: bool):
 
-    # Читаем настройки форматирования из файла
-
-    with open("all_settings.json", "r", encoding="utf-8") as file:
-        sheet_settings = json.load(file)
-        print("Настройки форматирования получены!")
-
-    flag = False
-
-    if flag:
+    if mode:
         # Список и обработка полноценных файлов
         print('\nОбработка полноценных файлов\n')
         full_data_xlsx = {
