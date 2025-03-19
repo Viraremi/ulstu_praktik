@@ -642,7 +642,7 @@ all_settings = {
     'DPO_GS_other_3' : DPO_GS_other_3,
     'DPO_MS' : DPO_MS
 }
-def get_settings():
+def generate():
     print('Генерация файла настроек...')
     json_string = json.dumps(all_settings, ensure_ascii=False, indent=4)
     with open("all_settings.json", "w", encoding="utf-8") as file:
