@@ -19,13 +19,13 @@ def save_to_csv(dataframe, file_path, separator):
 
 def full_exel_to_csv(path:str, year, settings):
     print('Обработка ' + settings['sheet'] + '...')
-    df = pd.read_excel('data_xlsx/' + path, sheet_name=settings['sheet'], header=None)
+    df = pd.read_excel(path, sheet_name=settings['sheet'], header=None)
     df = df.iloc[settings['iloc_rows'][0]:settings['iloc_rows'][1], settings['iloc_columns'][0]:settings['iloc_columns'][1]] # Обрезаем лишнее
     df = df.drop(settings['drop_column'], axis=1)
     df = df.stack().reset_index(drop=True).to_frame() # Складываем таблицу в одну большую строку
     m_id = pd.MultiIndex.from_product([id_SubFed] + settings['m_id_lists'], names=settings['m_id_names'])
     df = df.set_axis(m_id, axis=0) # Присваиваем мультииндекс
-    df.insert(0, 'year', year + '-01-01') # Добавляем колонку "год"
+    df.insert(0, 'year', str(year) + '-01-01') # Добавляем колонку "год"
     df = df.rename(columns={0: 'amount'})
     return df
 
@@ -51,7 +51,7 @@ def full_dpo_gs_other_to_csv(path: str, year, settings):
 
 def ul_exel_to_csv(path:str, year, settings):
     print('Обработка ' + settings['sheet'] + '...')
-    df = pd.read_excel('data_xlsx/' + path, sheet_name=settings['sheet'], header=None)
+    df = pd.read_excel(path, sheet_name=settings['sheet'], header=None)
     df = df.iloc[settings['iloc_rows'][0]:settings['iloc_rows'][1], settings['iloc_columns'][0]:settings['iloc_columns'][1]] # Обрезаем лишнее
     df = df.drop(settings['drop_column'], axis=1)
     df = df.dropna(how='any')
@@ -61,7 +61,7 @@ def ul_exel_to_csv(path:str, year, settings):
     df = df.stack().reset_index(drop=True).to_frame() # Складываем таблицу в одну большую строку
     m_id = pd.MultiIndex.from_product([ulsk] + settings['m_id_lists'], names=settings['m_id_names'])
     df = df.set_axis(m_id, axis=0) # Присваиваем мультииндекс
-    df.insert(0, 'year', year + '-01-01') # Добавляем колонку "год"
+    df.insert(0, 'year', str(year) + '-01-01') # Добавляем колонку "год"
     df = df.rename(columns={0: 'amount'})
     return df
 
@@ -135,43 +135,26 @@ ignore_sheet = [
     # 'DPO_MS'
 ]
 
-def start_format(sheet_settings, mode: bool):
+def start_format(sheet_settings, mode: bool, file_path, file_year):
 
-    if mode:
-        # Список и обработка полноценных файлов
-        print('\nОбработка полноценных файлов\n')
-        full_data_xlsx = {
-            # '2020_full.xlsx': '2020',
-            # '2021_full_new.xlsx': '2021',
-            # '2022_full.xlsx': '2022',
-            # '2023_full.xlsx': '2023',
-        }
-        for file in full_data_xlsx.items():
-            print('\nОткрываем файл ' + file[0])
-            for data in sheet_settings.items():
-                if data[0] in ignore_sheet: continue
-                df = full_exel_to_csv(file[0], file[1], data[1])
-                save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
-            # full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
-            # full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
-    else:
-        # Список и обработка ульяновских файлов
-        print('\nОбработка ульяновских файлов\n')
-        ul_data_xlsx = {
-            # '2019_ul.xlsx' : 2019,
-            # '2020_ul.xlsx' : 2020,
-            # '2021_ul.xlsx' : 2021,
-            # '2022_ul.xlsx' : 2022,
-            # '2023_ul.xlsx' : 2023,
-            '2024_ul.xlsx': '2024'
-        }
-        for file in ul_data_xlsx.items():
-            print('\nОткрываем файл ' + file[0])
-            for data in sheet_settings.items():
-                if data[0] in ignore_sheet: continue
-                df = ul_exel_to_csv(file[0], file[1], data[1])
-                if df.size != 0:
-                    save_to_csv(df, 'CSVs/' + file[0][:-5] + '/' + data[1]['csv_path'], ';')
-            ul_dpo_gs_to_csv(file[0], file[1], sheet_settings)
-            ul_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
+    file_name = file_path.split("/")[-1]
+
+    if mode: #full
+        print('\nОткрываем файл ' + file_name)
+        for data in sheet_settings.items():
+            if data[0] in ignore_sheet: continue
+            df = full_exel_to_csv(file_path, file_year, data[1])
+            save_to_csv(df, 'CSVs/' + file_name[:-5] + '/' + data[1]['csv_path'], ';')
+        # full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
+        # full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
+
+    else: #ul
+        print('\nОткрываем файл ' + file_name)
+        for data in sheet_settings.items():
+            if data[0] in ignore_sheet: continue
+            df = ul_exel_to_csv(file_path, file_year, data[1])
+            if df.size != 0:
+                save_to_csv(df, 'CSVs/' + file_name[:-5] + '/' + data[1]['csv_path'], ';')
+        # ul_dpo_gs_to_csv(file_name, file[1], sheet_settings)
+        # ul_dpo_gs_other_to_csv(file_name, file[1], sheet_settings)
     print('SUCCESS')
