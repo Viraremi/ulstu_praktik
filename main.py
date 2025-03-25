@@ -1,15 +1,17 @@
 import sys
 import json
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
-from ui.ui_main import Ui_MainWindow
 from datetime import datetime
-import sheet_settings as format_settings
-import sheet_formating as format_do
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
+from SettingsWindow import SettingsWindow
+from ui.py_ui_files.ui_main import Ui_MainWindow
+from ui.py_ui_files.ui_settings_ignore import Ui_Dialog as ui_settings_ignore_dialog
+from sheet_format import sheet_settings as format_settings, sheet_formating as format_do
 
 
-class CsvFormatter(QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self):
-        super(CsvFormatter, self).__init__()
+        super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -19,6 +21,10 @@ class CsvFormatter(QMainWindow):
         self.ui.btnDoFormatToCSV.clicked.connect(self.format)
         self.ui.btnOpenFile.clicked.connect(self.open_file)
         self.ui.btnSelectResultPath.clicked.connect(self.select_result_path)
+        self.ui.actionSettingsListIgnore.triggered.connect(self.open_window_settings_ignore)
+        self.ui.actionOpenSheetSettingsWindow.triggered.connect(self.open_window_settings)
+
+        self.window_settings = None
 
     def get_mode(self):
         if self.ui.radioBtnFullFile.isChecked(): return True
@@ -29,21 +35,23 @@ class CsvFormatter(QMainWindow):
         self.ui.labelError.setText("Обработка...")
 
         format_settings.generate()
-        with open("all_settings.json", "r", encoding="utf-8") as file:
+        with open("sheet_format/all_settings.json", "r", encoding="utf-8") as file:
             sheet_settings = json.load(file)
             print("Настройки форматирования получены!")
 
-        format_do.start_format(
-            sheet_settings,
-            self.get_mode(),
-            self.ui.textEditSelectedFilePath.toPlainText(),
-            self.ui.spinBoxFileYear.value(),
-            self.ui.textEditResultPath.toPlainText()
-        )
+        try:
+            format_do.start_format(
+                sheet_settings,
+                self.get_mode(),
+                self.ui.textEditSelectedFilePath.toPlainText(),
+                self.ui.spinBoxFileYear.value(),
+                self.ui.textEditResultPath.toPlainText()
+            )
+        except Exception as e:
+            self.ui.btnDoFormatToCSV.setDisabled(False)
+            self.ui.labelError.setText("Ошибка! Форматирование не удалось!")
+            return
 
-        self.show_msg_done()
-
-    def show_msg_done(self):
         self.ui.btnDoFormatToCSV.setDisabled(False)
         self.ui.labelError.setText("Готово!")
 
@@ -55,10 +63,21 @@ class CsvFormatter(QMainWindow):
         folder_path = QFileDialog.getExistingDirectory(self, "Выберите папку")
         if folder_path: self.ui.textEditResultPath.setText(folder_path)
 
+    def open_window_settings_ignore(self):
+        self.new_window = QtWidgets.QDialog()
+        self.ui_settings = ui_settings_ignore_dialog()
+        self.ui_settings.setupUi(self.new_window)
+        self.new_window.show()
+
+    def open_window_settings(self):
+        if self.window_settings is None or not self.window_settings.isVisible():
+            self.window_settings = SettingsWindow()
+            self.window_settings.show()
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    window = CsvFormatter()
+    window = MainWindow()
     window.show()
 
     sys.exit(app.exec())

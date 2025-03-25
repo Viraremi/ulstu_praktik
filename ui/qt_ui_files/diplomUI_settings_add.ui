@@ -151,9 +151,9 @@
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="btnSave">
      <property name="text">
-      <string>PushButton</string>
+      <string>Сохранить</string>
      </property>
     </widget>
    </item>

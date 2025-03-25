@@ -117,10 +117,10 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addLayout(self.formLayout)
 
-        self.pushButton = QPushButton(Dialog)
-        self.pushButton.setObjectName(u"pushButton")
+        self.btnSave = QPushButton(Dialog)
+        self.btnSave.setObjectName(u"btnSave")
 
-        self.verticalLayout.addWidget(self.pushButton)
+        self.verticalLayout.addWidget(self.btnSave)
 
 
         self.retranslateUi(Dialog)
@@ -145,6 +145,6 @@ class Ui_Dialog(object):
         self.textEditMIdNames.setPlaceholderText(QCoreApplication.translate("Dialog", u"\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u044f \u0441\u043f\u0438\u0441\u043a\u043e\u0432 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0439. \u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u0439 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u0443 \u0443\u0440\u043e\u0432\u043d\u0435\u0439 \u043c\u0443\u043b\u044c\u0442\u0438\u0438\u043d\u0434\u0435\u043a\u0441\u0430 ", None))
         self.lineEditSheet.setPlaceholderText(QCoreApplication.translate("Dialog", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043b\u0438\u0441\u0442\u0430 \u0432 ex\u0441el \u0444\u0430\u0439\u043b\u0435", None))
         self.lineEditCSVPath.setPlaceholderText(QCoreApplication.translate("Dialog", u"\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 csv \u0444\u0430\u0439\u043b\u0430 \u0441 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u043e\u043c", None))
-        self.pushButton.setText(QCoreApplication.translate("Dialog", u"PushButton", None))
+        self.btnSave.setText(QCoreApplication.translate("Dialog", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
     # retranslateUi
 
