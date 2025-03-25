@@ -135,7 +135,7 @@ ignore_sheet = [
     # 'DPO_MS'
 ]
 
-def start_format(sheet_settings, mode: bool, file_path, file_year):
+def start_format(sheet_settings, mode: bool, file_path, file_year, save_path):
 
     file_name = file_path.split("/")[-1]
 
@@ -144,7 +144,7 @@ def start_format(sheet_settings, mode: bool, file_path, file_year):
         for data in sheet_settings.items():
             if data[0] in ignore_sheet: continue
             df = full_exel_to_csv(file_path, file_year, data[1])
-            save_to_csv(df, 'CSVs/' + file_name[:-5] + '/' + data[1]['csv_path'], ';')
+            save_to_csv(df, save_path + '/' + data[1]['csv_path'], ';')
         # full_dpo_gs_to_csv(file[0], file[1], sheet_settings)
         # full_dpo_gs_other_to_csv(file[0], file[1], sheet_settings)
 
@@ -154,7 +154,7 @@ def start_format(sheet_settings, mode: bool, file_path, file_year):
             if data[0] in ignore_sheet: continue
             df = ul_exel_to_csv(file_path, file_year, data[1])
             if df.size != 0:
-                save_to_csv(df, 'CSVs/' + file_name[:-5] + '/' + data[1]['csv_path'], ';')
+                save_to_csv(df, save_path + '/' + data[1]['csv_path'], ';')
         # ul_dpo_gs_to_csv(file_name, file[1], sheet_settings)
         # ul_dpo_gs_other_to_csv(file_name, file[1], sheet_settings)
     print('SUCCESS')

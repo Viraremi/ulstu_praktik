@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="labelSettingsIgnoreListHeader">
+     <property name="text">
+      <string>Выберите листы которые нужно игнорировать...</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="listWidgetSheetsList">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
+     </property>
+     <item>
+      <property name="text">
+       <string>Пример1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Пример2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Пример3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Пример4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Пример5</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnSaveSelect">
+     <property name="text">
+      <string>Сохранить выбор</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
