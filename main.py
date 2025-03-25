@@ -1,10 +1,11 @@
 import sys
 import json
-import sheet_settings as sttgs
-import sheet_formating as frmt
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from ui.ui_main import Ui_MainWindow
 from datetime import datetime
+import sheet_settings as format_settings
+import sheet_formating as format_do
+
 
 class CsvFormatter(QMainWindow):
     def __init__(self):
@@ -27,12 +28,12 @@ class CsvFormatter(QMainWindow):
         self.ui.btnDoFormatToCSV.setDisabled(True)
         self.ui.labelError.setText("Обработка...")
 
-        sttgs.generate()
+        format_settings.generate()
         with open("all_settings.json", "r", encoding="utf-8") as file:
             sheet_settings = json.load(file)
             print("Настройки форматирования получены!")
 
-        frmt.start_format(
+        format_do.start_format(
             sheet_settings,
             self.get_mode(),
             self.ui.textEditSelectedFilePath.toPlainText(),

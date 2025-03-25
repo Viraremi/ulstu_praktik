@@ -17,45 +17,12 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Кадровые данные</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_8">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QPushButton" name="btnOpenFile">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Выбрать</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="labelFilePath">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Путь к файлу...</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
       <item row="0" column="1">
        <widget class="QTextEdit" name="textEditSelectedFilePath">
         <property name="sizePolicy">
@@ -64,40 +31,10 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="placeholderText">
+         <string>Открыть...</string>
+        </property>
        </widget>
-      </item>
-      <item row="1" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_7">
-        <item>
-         <widget class="QPushButton" name="btnSelectResultPath">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Выбрать</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="labelSaveTo">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Сохранить в...</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
       <item row="1" column="1">
        <widget class="QTextEdit" name="textEditResultPath">
@@ -106,6 +43,35 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>Сохранить в...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="btnOpenFile">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Выбрать</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="btnSelectResultPath">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Выбрать</string>
         </property>
        </widget>
       </item>
@@ -192,46 +158,73 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string/>
+         <string>Ожидание начала форматирования...</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="mainBtns">
-      <property name="spacing">
-       <number>6</number>
+     <widget class="QPushButton" name="btnDoFormatToCSV">
+      <property name="text">
+       <string>Форматировать</string>
       </property>
-      <item>
-       <widget class="QPushButton" name="btnDoFormatToCSV">
-        <property name="text">
-         <string>Форматировать</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnIgnorList">
-        <property name="text">
-         <string>Игнорировать листы...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_settings">
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <addaction name="actionOpenSheetSettingsWindow"/>
+    <addaction name="actionSettingsListIgnore"/>
+   </widget>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_settings"/>
+  </widget>
+  <action name="actionOpenSheetSettingsWindow">
+   <property name="text">
+    <string>Открыть настройки листов</string>
+   </property>
+  </action>
+  <action name="actionSettingsListIgnore">
+   <property name="text">
+    <string>Игнориривать листы...</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Получить файл настроек</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>spinBoxFileYear</tabstop>
   <tabstop>radioBtnFullFile</tabstop>
   <tabstop>radioBtnULFile</tabstop>
   <tabstop>btnDoFormatToCSV</tabstop>
-  <tabstop>btnIgnorList</tabstop>
-  <tabstop>btnOpenFile</tabstop>
  </tabstops>
  <resources/>
  <connections/>
