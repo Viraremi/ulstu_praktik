@@ -24,6 +24,7 @@ class MainWindow(QMainWindow):
         self.ui.actionOpenSheetSettingsWindow.triggered.connect(self.open_window_settings)
 
         self.window_settings = None
+        self.ignore_list = []
 
     def get_mode(self):
         if self.ui.radioBtnFullFile.isChecked(): return True
@@ -45,7 +46,8 @@ class MainWindow(QMainWindow):
             self.get_mode(),
             self.ui.textEditSelectedFilePath.toPlainText(),
             self.ui.spinBoxFileYear.value(),
-            self.ui.textEditResultPath.toPlainText()
+            self.ui.textEditResultPath.toPlainText(),
+            self.ignore_list
         )
 
         self.ui.btnDoFormatToCSV.setDisabled(False)
@@ -64,6 +66,15 @@ class MainWindow(QMainWindow):
         self.ui_settings = ui_settings_ignore_dialog()
         self.ui_settings.setupUi(self.new_window)
         self.new_window.show()
+        self.ui_settings.btnSaveSelect.clicked.connect(self.save_ignore_list)
+
+        self.ui_settings.listWidgetSheetsList.clear()
+        self.ui_settings.listWidgetSheetsList.addItems(format_settings.get_settings())
+
+    def save_ignore_list(self):
+        selected_items = self.ui_settings.listWidgetSheetsList.selectedItems()
+        self.ignore_list = {item.text() for item in selected_items}
+        self.new_window.close()
 
     def open_window_settings(self):
         if self.window_settings is None or not self.window_settings.isVisible():

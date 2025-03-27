@@ -37,8 +37,10 @@ class SettingsWindow(QMainWindow):
         self.new_window_ui.setupUi(self.new_window)
         self.new_window.show()
 
-        try: settings = format_settings.get_json_string()
-        except Exception: settings = ""
+        try:
+            settings = format_settings.get_json_string()
+        except Exception:
+            settings = ""
         self.new_window_ui.textEditShowSettings.setText(settings)
 
     def new_settings_save(self):

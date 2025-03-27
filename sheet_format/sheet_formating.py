@@ -100,42 +100,7 @@ def ul_dpo_gs_other_to_csv(path: str, year: int, settings):
 
 #Основной блок
 
-ignore_sheet = [
-    # 'Amount_GS',
-    # 'Amount_MS',
-    # 'Gender_GS',
-    # 'Gender_MS',
-    # 'Age_GS',
-    # 'Age_MS',
-    # 'EducationLevel_GS',
-    # 'EducationLevel_MS',
-    # 'Educ_spec_GS',
-    # 'Educ_spec_MS',
-    # 'AcademicDegree_GS',
-    # 'AcademicDegree_MS',
-    # 'Exp_GS',
-    # 'Exp_MS',
-    # 'Changeability_GS',
-    # 'GosOrgAmount',
-    # 'Competition',
-    # 'CitizenParticipation',
-    # 'Substitution',
-    # 'Mentoring',
-    # 'ReserveComposition',
-    # 'ReserveCause',
-    # 'Attestation',
-    # 'Ranks',
-    # 'ProfDev_amount',
-    # 'ProfDev_resources',
-    # 'DPO_GS_1',
-    # 'DPO_GS_2',
-    # 'DPO_GS_other_1',
-    # 'DPO_GS_other_2',
-    # 'DPO_GS_other_3',
-    # 'DPO_MS'
-]
-
-def start_format(sheet_settings, mode: bool, file_path, file_year, save_path):
+def start_format(sheet_settings, mode: bool, file_path, file_year, save_path, ignore_sheet):
 
     file_name = file_path.split("/")[-1]
 
