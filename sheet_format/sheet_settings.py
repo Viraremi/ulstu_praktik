@@ -653,13 +653,21 @@ def update_or_reset_settings(settings=None):
     print('SUCCESS')
 
 def get_json_string():
-    with open("all_settings.json", "r", encoding="utf-8") as file:
-        json_string = json.load(file)
-        print("Настройки форматирования получены!")
-    return json.dumps(json_string, ensure_ascii=False, indent=4)
+    try:
+        with open("all_settings.json", "r", encoding="utf-8") as file:
+            json_string = json.load(file)
+            print("Настройки форматирования получены!")
+        return json.dumps(json_string, ensure_ascii=False, indent=4)
+    except FileNotFoundError:
+        return ""
+
+
 
 def get_settings():
-    with open("all_settings.json", "r", encoding="utf-8") as file:
-        json_string = json.load(file)
-        print("Настройки форматирования получены!")
-    return json_string
+    try:
+        with open("all_settings.json", "r", encoding="utf-8") as file:
+            json_string = json.load(file)
+            print("Настройки форматирования получены!")
+        return json_string
+    except FileNotFoundError:
+        return ""

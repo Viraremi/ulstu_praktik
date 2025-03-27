@@ -17,38 +17,55 @@ class SettingsWindow(QMainWindow):
         self.ui.btnSettingsDelete.clicked.connect(self.btn_delete)
         self.ui.btnSettingsShow.clicked.connect(self.btn_show)
 
+        self.settings_list = format_settings.get_settings()
+
     def btn_add(self):
-        self.new_window = QtWidgets.QDialog()
-        self.new_window_ui = ui_settings_add_dialog()
-        self.new_window_ui.setupUi(self.new_window)
-        self.new_window.show()
-        self.new_window_ui.btnSave.clicked.connect(self.new_settings_save)
+        self.add_window = QtWidgets.QDialog()
+        self.add_window_ui = ui_settings_add_dialog()
+        self.add_window_ui.setupUi(self.add_window)
+        self.add_window.show()
+        self.add_window_ui.btnSave.clicked.connect(self.new_sheet_save)
 
     def btn_delete(self):
-        self.new_window = QtWidgets.QDialog()
-        self.new_window_ui = ui_settings_del_dialog()
-        self.new_window_ui.setupUi(self.new_window)
-        self.new_window.show()
-        self.new_window_ui.btnDeleteSelectedList.clicked.connect(self.delete_selected_sheet)
+        self.del_window = QtWidgets.QDialog()
+        self.del_window_ui = ui_settings_del_dialog()
+        self.del_window_ui.setupUi(self.del_window)
+        self.del_window.show()
+        self.del_window_ui.btnDeleteSelectedList.clicked.connect(self.delete_selected_sheet)
+
+        self.del_window_ui.comboBoxSelectList.clear()
+        self.del_window_ui.comboBoxSelectList.addItems(self.settings_list)
 
     def btn_show(self):
-        self.new_window = QtWidgets.QDialog()
-        self.new_window_ui = ui_settings_show_dialog()
-        self.new_window_ui.setupUi(self.new_window)
-        self.new_window.show()
+        self.show_window = QtWidgets.QDialog()
+        self.show_window_ui = ui_settings_show_dialog()
+        self.show_window_ui.setupUi(self.show_window)
+        self.show_window.show()
+        self.show_window_ui.textEditShowSettings.setText(format_settings.get_json_string())
 
-        try:
-            settings = format_settings.get_json_string()
-        except Exception:
-            settings = ""
-        self.new_window_ui.textEditShowSettings.setText(settings)
-
-    def new_settings_save(self):
-        # TODO(new_settings_save)
-        self.new_window.close()
-        return
+    def new_sheet_save(self):
+        sheet = self.add_window_ui.lineEditSheet.text()
+        iloc_rows = [int(item) for item in self.add_window_ui.textEditIlocRows.toPlainText().split('\n')]
+        iloc_columns = [int(item) for item in self.add_window_ui.textEditIlocColumns.toPlainText().split('\n')]
+        drop_column = [int(item) for item in self.add_window_ui.textEditDropColumns.toPlainText().split('\n')]
+        m_id_lists = [item.split('\n') for item in self.add_window_ui.textEditMIdLists.toPlainText().split('\n\n')]
+        m_id_names = [item.split('\n') for item in self.add_window_ui.textEditMIdNames.toPlainText().split('\n\n')]
+        csv_path = self.add_window_ui.lineEditCSVPath.text()
+        new_sheet = {
+            'sheet': sheet,
+            'iloc_rows': iloc_rows,
+            'iloc_columns': iloc_columns,
+            'drop_column': drop_column,
+            'm_id_lists': m_id_lists,
+            'm_id_names': m_id_names,
+            'csv_path': csv_path
+        }
+        self.settings_list[sheet] = new_sheet #TODO(ему почему то не нравится [sheet])
+        format_settings.update_or_reset_settings(self.settings_list)
+        self.add_window.close()
 
     def delete_selected_sheet(self):
-        # TODO(delete_selected_sheet)
-        self.new_window.close()
-        return
+        selected_sheet = self.del_window_ui.comboBoxSelectList.currentText()
+        self.settings_list.pop(selected_sheet)
+        format_settings.update_or_reset_settings(self.settings_list)
+        self.del_window.close()
