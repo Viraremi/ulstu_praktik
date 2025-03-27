@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         self.ui.btnSelectResultPath.clicked.connect(self.select_result_path)
         self.ui.actionSettingsListIgnore.triggered.connect(self.open_window_settings_ignore)
         self.ui.actionOpenSheetSettingsWindow.triggered.connect(self.open_window_settings)
+        self.ui.action.triggered.connect(self.get_settings_file) #TODO(action -> actionGetSettingsFile)
 
         self.window_settings = None
         self.ignore_list = []
@@ -34,8 +35,9 @@ class MainWindow(QMainWindow):
         self.ui.btnDoFormatToCSV.setDisabled(True)
         self.ui.labelError.setText("Обработка...")
 
+
         # try:
-        #
+        # TODO(format_do.start_format())
         # except Exception as e:
         #     self.ui.btnDoFormatToCSV.setDisabled(False)
         #     self.ui.labelError.setText("Ошибка! Форматирование не удалось!")
@@ -80,6 +82,10 @@ class MainWindow(QMainWindow):
         if self.window_settings is None or not self.window_settings.isVisible():
             self.window_settings = SettingsWindow()
             self.window_settings.show()
+
+    def get_settings_file(self):
+        # TODO(get_settings_file)
+        return
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

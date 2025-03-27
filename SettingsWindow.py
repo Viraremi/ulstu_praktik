@@ -44,11 +44,11 @@ class SettingsWindow(QMainWindow):
         self.new_window_ui.textEditShowSettings.setText(settings)
 
     def new_settings_save(self):
-        #TODO
+        # TODO(new_settings_save)
         self.new_window.close()
         return
 
     def delete_selected_sheet(self):
-        # TODO
+        # TODO(delete_selected_sheet)
         self.new_window.close()
         return
