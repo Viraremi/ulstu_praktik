@@ -1,5 +1,4 @@
 import sys
-import json
 from datetime import datetime
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
@@ -18,7 +17,7 @@ class MainWindow(QMainWindow):
         self.ui.radioBtnFullFile.setChecked(True)
         self.ui.spinBoxFileYear.setValue(datetime.now().year)
 
-        self.ui.btnDoFormatToCSV.clicked.connect(self.format)
+        self.ui.btnDoFormatToCSV.clicked.connect(self.do_format)
         self.ui.btnOpenFile.clicked.connect(self.open_file)
         self.ui.btnSelectResultPath.clicked.connect(self.select_result_path)
         self.ui.actionSettingsListIgnore.triggered.connect(self.open_window_settings_ignore)
@@ -30,27 +29,24 @@ class MainWindow(QMainWindow):
         if self.ui.radioBtnFullFile.isChecked(): return True
         elif self.ui.radioBtnULFile.isChecked(): return False
 
-    def format(self):
+    def do_format(self):
         self.ui.btnDoFormatToCSV.setDisabled(True)
         self.ui.labelError.setText("Обработка...")
 
-        format_settings.generate()
-        with open("sheet_format/all_settings.json", "r", encoding="utf-8") as file:
-            sheet_settings = json.load(file)
-            print("Настройки форматирования получены!")
+        # try:
+        #
+        # except Exception as e:
+        #     self.ui.btnDoFormatToCSV.setDisabled(False)
+        #     self.ui.labelError.setText("Ошибка! Форматирование не удалось!")
+        #     return
 
-        try:
-            format_do.start_format(
-                sheet_settings,
-                self.get_mode(),
-                self.ui.textEditSelectedFilePath.toPlainText(),
-                self.ui.spinBoxFileYear.value(),
-                self.ui.textEditResultPath.toPlainText()
-            )
-        except Exception as e:
-            self.ui.btnDoFormatToCSV.setDisabled(False)
-            self.ui.labelError.setText("Ошибка! Форматирование не удалось!")
-            return
+        format_do.start_format(
+            format_settings.get_settings(),
+            self.get_mode(),
+            self.ui.textEditSelectedFilePath.toPlainText(),
+            self.ui.spinBoxFileYear.value(),
+            self.ui.textEditResultPath.toPlainText()
+        )
 
         self.ui.btnDoFormatToCSV.setDisabled(False)
         self.ui.labelError.setText("Готово!")
