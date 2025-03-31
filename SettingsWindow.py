@@ -48,7 +48,6 @@ class SettingsWindow(QMainWindow):
         iloc_rows = [int(item) for item in self.add_window_ui.textEditIlocRows.toPlainText().split('\n')]
         iloc_columns = [int(item) for item in self.add_window_ui.textEditIlocColumns.toPlainText().split('\n')]
         drop_column = [int(item) for item in self.add_window_ui.textEditDropColumns.toPlainText().split('\n')]
-        # TODO(в интерфейсе надо поправить плейсхолдеры для эих полей)
         m_id_lists = [item.split('\n') for item in self.add_window_ui.textEditMIdLists.toPlainText().split('\n\n')]
         m_id_names = [item.split('\n') for item in self.add_window_ui.textEditMIdNames.toPlainText().split('\n\n')]
         csv_path = self.add_window_ui.lineEditCSVPath.text()
@@ -61,7 +60,7 @@ class SettingsWindow(QMainWindow):
             'm_id_names': m_id_names,
             'csv_path': csv_path
         }
-        self.settings_list[sheet] = new_sheet #TODO(ему почему то не нравится [sheet])
+        self.settings_list[sheet] = new_sheet
         format_settings.update_or_reset_settings(self.settings_list)
         self.add_window.close()
 

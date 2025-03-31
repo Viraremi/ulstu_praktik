@@ -670,4 +670,4 @@ def get_settings():
             print("Настройки форматирования получены!")
         return json_string
     except FileNotFoundError:
-        return ""
+        return {}
