@@ -35,6 +35,8 @@ class Ui_MainWindow(object):
         self.actionImport.setObjectName(u"actionImport")
         self.actionExport = QAction(MainWindow)
         self.actionExport.setObjectName(u"actionExport")
+        self.actionGetSQL = QAction(MainWindow)
+        self.actionGetSQL.setObjectName(u"actionGetSQL")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_3 = QVBoxLayout(self.centralwidget)
@@ -132,10 +134,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addLayout(self.formLayoutSettings)
 
         self.labelStatus = QLabel(self.centralwidget)
-        self.labelStatus.setObjectName(u"labelError")
+        self.labelStatus.setObjectName(u"labelStatus")
         sizePolicy.setHeightForWidth(self.labelStatus.sizePolicy().hasHeightForWidth())
         self.labelStatus.setSizePolicy(sizePolicy)
-        self.labelStatus.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.labelStatus.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.labelStatus.setWordWrap(True)
 
         self.horizontalLayout.addWidget(self.labelStatus)
@@ -167,6 +169,8 @@ class Ui_MainWindow(object):
         self.menu_settings.addAction(self.actionSettingsListIgnore)
         self.menu_file.addAction(self.actionImport)
         self.menu_file.addAction(self.actionExport)
+        self.menu_file.addSeparator()
+        self.menu_file.addAction(self.actionGetSQL)
 
         self.retranslateUi(MainWindow)
 
@@ -179,6 +183,7 @@ class Ui_MainWindow(object):
         self.actionSettingsListIgnore.setText(QCoreApplication.translate("MainWindow", u"\u0418\u0433\u043d\u043e\u0440\u0438\u0440\u0438\u0432\u0430\u0442\u044c \u043b\u0438\u0441\u0442\u044b...", None))
         self.actionImport.setText(QCoreApplication.translate("MainWindow", u"\u0418\u043c\u043f\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
         self.actionExport.setText(QCoreApplication.translate("MainWindow", u"\u042d\u043a\u0441\u043f\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
+        self.actionGetSQL.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0441\u043a\u0440\u0438\u043f\u0442 \u0434\u043b\u044f \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438 \u0432 \u0411\u0414", None))
         self.textEditSelectedFilePath.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u0440\u044b\u0442\u044c...", None))
         self.textEditResultPath.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0432...", None))
         self.btnOpenFile.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c", None))

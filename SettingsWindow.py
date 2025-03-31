@@ -24,6 +24,7 @@ class SettingsWindow(QMainWindow):
         self.add_window_ui = ui_settings_add_dialog()
         self.add_window_ui.setupUi(self.add_window)
         self.add_window.show()
+        self.add_window.setWindowTitle("Новый лист")
         self.add_window_ui.btnSave.clicked.connect(self.new_sheet_save)
 
     def btn_delete(self):
@@ -31,6 +32,7 @@ class SettingsWindow(QMainWindow):
         self.del_window_ui = ui_settings_del_dialog()
         self.del_window_ui.setupUi(self.del_window)
         self.del_window.show()
+        self.del_window.setWindowTitle("Удалить лист")
         self.del_window_ui.btnDeleteSelectedList.clicked.connect(self.delete_selected_sheet)
 
         self.del_window_ui.comboBoxSelectList.clear()
@@ -41,6 +43,7 @@ class SettingsWindow(QMainWindow):
         self.show_window_ui = ui_settings_show_dialog()
         self.show_window_ui.setupUi(self.show_window)
         self.show_window.show()
+        self.show_window.setWindowTitle("Настройки")
         self.show_window_ui.textEditShowSettings.setText(format_settings.get_json_string())
 
     def new_sheet_save(self):

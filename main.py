@@ -49,6 +49,7 @@ class MainWindow(QMainWindow):
         self.ui.actionOpenSheetSettingsWindow.triggered.connect(self.open_window_settings)
         self.ui.actionImport.triggered.connect(self.import_settings)
         self.ui.actionExport.triggered.connect(self.export_settings)
+        self.ui.actionGetSQL.triggered.connect(self.get_sql_script)
 
         self.window_settings = None
         self.ignore_list = []
@@ -84,6 +85,7 @@ class MainWindow(QMainWindow):
         self.new_window = QtWidgets.QDialog()
         self.ui_settings = ui_settings_ignore_dialog()
         self.ui_settings.setupUi(self.new_window)
+        self.new_window.setWindowTitle("Игнорируемые листы")
         self.new_window.show()
         self.ui_settings.btnSaveSelect.clicked.connect(self.save_ignore_list)
 
@@ -119,6 +121,10 @@ class MainWindow(QMainWindow):
         if file_path:
             shutil.copy(SETTINGS_FILE, file_path)
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
+
+    def get_sql_script(self):
+        #TODO(get_sql_script)
+        return
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
