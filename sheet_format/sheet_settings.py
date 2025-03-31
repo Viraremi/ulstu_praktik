@@ -661,8 +661,6 @@ def get_json_string():
     except FileNotFoundError:
         return ""
 
-
-
 def get_settings():
     try:
         with open("all_settings.json", "r", encoding="utf-8") as file:
