@@ -1,12 +1,14 @@
+import json
+import shutil
 import sys
 from datetime import datetime
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from SettingsWindow import SettingsWindow
 from ui.py_ui_files.ui_main import Ui_MainWindow
 from ui.py_ui_files.ui_settings_ignore import Ui_Dialog as ui_settings_ignore_dialog
 from sheet_format import sheet_settings as format_settings, sheet_formating as format_do
-
+SETTINGS_FILE = "all_settings.json"
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -38,7 +40,7 @@ class MainWindow(QMainWindow):
 
 
         # try:
-        # TODO(format_do.start_format())
+        # TODO(здесь нужна асинхронность)
         # except Exception as e:
         #     self.ui.btnDoFormatToCSV.setDisabled(False)
         #     self.ui.labelError.setText("Ошибка! Форматирование не удалось!")
@@ -77,6 +79,7 @@ class MainWindow(QMainWindow):
     def save_ignore_list(self):
         selected_items = self.ui_settings.listWidgetSheetsList.selectedItems()
         self.ignore_list = {item.text() for item in selected_items}
+        QMessageBox.information(self, "Готово!", "Игнорирование задано")
         self.new_window.close()
 
     def open_window_settings(self):
@@ -85,12 +88,24 @@ class MainWindow(QMainWindow):
             self.window_settings.show()
 
     def import_settings(self):
-        # TODO(import_settings)
-        return
+        file_path, _ = QFileDialog.getOpenFileName(self, "Выбрать файл", "", "JSON Files (*.json)")
+
+        if file_path:
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    json.load(f)
+                shutil.copy(file_path, SETTINGS_FILE)
+                QMessageBox.information(self, "Успех", "Настройки успешно импортированы!")
+            except json.JSONDecodeError:
+                QMessageBox.critical(self, "Ошибка", "Выбранный файл не является корректным JSON!")
+            except Exception as e:
+                QMessageBox.critical(self, "Ошибка", f"Ошибка при импорте файла: {e}")
 
     def export_settings(self):
-        # TODO(export_settings)
-        return
+        file_path, _ = QFileDialog.getSaveFileName(self,  "Экспортировать", "", "JSON Files (*.json)")
+        if file_path:
+            shutil.copy(SETTINGS_FILE, file_path)
+            QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

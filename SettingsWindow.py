@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QMessageBox
 from ui.py_ui_files.ui_settings import Ui_SettingsWindow
 from ui.py_ui_files.ui_settings_add import Ui_Dialog as ui_settings_add_dialog
 from ui.py_ui_files.ui_settings_del import Ui_Dialog as ui_settings_del_dialog
@@ -62,10 +62,12 @@ class SettingsWindow(QMainWindow):
         }
         self.settings_list[sheet] = new_sheet
         format_settings.update_or_reset_settings(self.settings_list)
+        QMessageBox.information(self, "Готово!", f"Лист \"{sheet}\" создан")
         self.add_window.close()
 
     def delete_selected_sheet(self):
         selected_sheet = self.del_window_ui.comboBoxSelectList.currentText()
         self.settings_list.pop(selected_sheet)
         format_settings.update_or_reset_settings(self.settings_list)
+        QMessageBox.information(self, "Готово!", f"Лист \"{selected_sheet}\" удален")
         self.del_window.close()
