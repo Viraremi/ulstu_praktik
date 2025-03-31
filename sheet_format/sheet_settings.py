@@ -608,7 +608,7 @@ DPO_MS = {
     'csv_path' : 'DPO_MS.csv'
 }
 
-all_settings = {
+default_settings = {
     'Amount_GS' : Amount_GS,
     'Amount_MS' : Amount_MS,
     'Gender_GS' : Gender_GS,
@@ -642,9 +642,30 @@ all_settings = {
     'DPO_GS_other_3' : DPO_GS_other_3,
     'DPO_MS' : DPO_MS
 }
-def generate():
+
+def update_or_reset_settings(settings=None):
     print('Генерация файла настроек...')
+    if settings is None: all_settings = default_settings
+    else: all_settings = settings
     json_string = json.dumps(all_settings, ensure_ascii=False, indent=4)
     with open("all_settings.json", "w", encoding="utf-8") as file:
         file.write(json_string)
     print('SUCCESS')
+
+def get_json_string():
+    try:
+        with open("all_settings.json", "r", encoding="utf-8") as file:
+            json_string = json.load(file)
+            print("Настройки форматирования получены!")
+        return json.dumps(json_string, ensure_ascii=False, indent=4)
+    except FileNotFoundError:
+        return ""
+
+def get_settings():
+    try:
+        with open("all_settings.json", "r", encoding="utf-8") as file:
+            json_string = json.load(file)
+            print("Настройки форматирования получены!")
+        return json_string
+    except FileNotFoundError:
+        return {}

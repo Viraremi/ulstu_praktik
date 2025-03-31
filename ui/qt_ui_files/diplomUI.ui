@@ -150,7 +150,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="labelError">
+       <widget class="QLabel" name="labelStatus">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -199,7 +199,10 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="actionImport"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionGetSQL"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_settings"/>
@@ -214,9 +217,19 @@
     <string>Игнориривать листы...</string>
    </property>
   </action>
-  <action name="action">
+  <action name="actionImport">
    <property name="text">
-    <string>Получить файл настроек</string>
+    <string>Импортировать настройки</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Экспортировать настройки</string>
+   </property>
+  </action>
+  <action name="actionGetSQL">
+   <property name="text">
+    <string>Получить скрипт для загрузки в БД</string>
    </property>
   </action>
  </widget>
