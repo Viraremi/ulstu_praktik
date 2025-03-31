@@ -3,12 +3,35 @@ import shutil
 import sys
 from datetime import datetime
 from PySide6 import QtWidgets
+from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from SettingsWindow import SettingsWindow
 from ui.py_ui_files.ui_main import Ui_MainWindow
 from ui.py_ui_files.ui_settings_ignore import Ui_Dialog as ui_settings_ignore_dialog
 from sheet_format import sheet_settings as format_settings, sheet_formating as format_do
 SETTINGS_FILE = "all_settings.json"
+
+class WorkerDoFormat(QThread):
+    signal = Signal(str, bool)
+    def __init__(self, sheet_settings, mode: bool, file_path, file_year, save_path, ignore_sheet):
+        super().__init__()
+        self.sheet_settings = sheet_settings
+        self.mode = mode
+        self.file_path = file_path
+        self.file_year = file_year
+        self.save_path = save_path
+        self.ignore_sheet = ignore_sheet
+
+    def run(self):
+        self.signal.emit("Обработка...", True)
+        format_do.start_format(
+            self.sheet_settings,
+            self.mode,
+            self.file_path,
+            self.file_year,
+            self.save_path,
+            self.ignore_sheet)
+        self.signal.emit("Готово!", False)
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -19,7 +42,7 @@ class MainWindow(QMainWindow):
         self.ui.radioBtnFullFile.setChecked(True)
         self.ui.spinBoxFileYear.setValue(datetime.now().year)
 
-        self.ui.btnDoFormatToCSV.clicked.connect(self.do_format)
+        self.ui.btnDoFormatToCSV.clicked.connect(self.start_format_async)
         self.ui.btnOpenFile.clicked.connect(self.open_file)
         self.ui.btnSelectResultPath.clicked.connect(self.select_result_path)
         self.ui.actionSettingsListIgnore.triggered.connect(self.open_window_settings_ignore)
@@ -34,29 +57,20 @@ class MainWindow(QMainWindow):
         if self.ui.radioBtnFullFile.isChecked(): return True
         elif self.ui.radioBtnULFile.isChecked(): return False
 
-    def do_format(self):
-        self.ui.btnDoFormatToCSV.setDisabled(True)
-        self.ui.labelError.setText("Обработка...")
-
-
-        # try:
-        # TODO(здесь нужна асинхронность)
-        # except Exception as e:
-        #     self.ui.btnDoFormatToCSV.setDisabled(False)
-        #     self.ui.labelError.setText("Ошибка! Форматирование не удалось!")
-        #     return
-
-        format_do.start_format(
+    def start_format_async(self):
+        self.worker = WorkerDoFormat(
             format_settings.get_settings(),
             self.get_mode(),
             self.ui.textEditSelectedFilePath.toPlainText(),
             self.ui.spinBoxFileYear.value(),
             self.ui.textEditResultPath.toPlainText(),
-            self.ignore_list
-        )
+            self.ignore_list)
+        self.worker.signal.connect(self.update_status_label)
+        self.worker.start()
 
-        self.ui.btnDoFormatToCSV.setDisabled(False)
-        self.ui.labelError.setText("Готово!")
+    def update_status_label(self, text, btn_disabled):
+        self.ui.btnDoFormatToCSV.setDisabled(btn_disabled)
+        self.ui.labelStatus.setText(text)
 
     def open_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Выберите файл", "", "Файл (*.xlsx)")
@@ -89,7 +103,6 @@ class MainWindow(QMainWindow):
 
     def import_settings(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Выбрать файл", "", "JSON Files (*.json)")
-
         if file_path:
             try:
                 with open(file_path, "r", encoding="utf-8") as f:

@@ -131,14 +131,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addLayout(self.formLayoutSettings)
 
-        self.labelError = QLabel(self.centralwidget)
-        self.labelError.setObjectName(u"labelError")
-        sizePolicy.setHeightForWidth(self.labelError.sizePolicy().hasHeightForWidth())
-        self.labelError.setSizePolicy(sizePolicy)
-        self.labelError.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
-        self.labelError.setWordWrap(True)
+        self.labelStatus = QLabel(self.centralwidget)
+        self.labelStatus.setObjectName(u"labelError")
+        sizePolicy.setHeightForWidth(self.labelStatus.sizePolicy().hasHeightForWidth())
+        self.labelStatus.setSizePolicy(sizePolicy)
+        self.labelStatus.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.labelStatus.setWordWrap(True)
 
-        self.horizontalLayout.addWidget(self.labelError)
+        self.horizontalLayout.addWidget(self.labelStatus)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout)
@@ -187,7 +187,7 @@ class Ui_MainWindow(object):
         self.labelFileType.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0438\u0434 \u0444\u0430\u0439\u043b\u0430:", None))
         self.radioBtnFullFile.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0446\u0435\u043d\u043d\u044b\u0439 \u0444\u0430\u0439\u043b", None))
         self.radioBtnULFile.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043b\u044c\u044f\u043d\u043e\u0432\u0441\u043a\u0438\u0439 \u0444\u0430\u0439\u043b", None))
-        self.labelError.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0436\u0438\u0434\u0430\u043d\u0438\u0435 \u043d\u0430\u0447\u0430\u043b\u0430 \u0444\u043e\u0440\u043c\u0430\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f...", None))
+        self.labelStatus.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0436\u0438\u0434\u0430\u043d\u0438\u0435 \u043d\u0430\u0447\u0430\u043b\u0430 \u0444\u043e\u0440\u043c\u0430\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f...", None))
         self.btnDoFormatToCSV.setText(QCoreApplication.translate("MainWindow", u"\u0424\u043e\u0440\u043c\u0430\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c", None))
         self.menu_settings.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
         self.menu_file.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
