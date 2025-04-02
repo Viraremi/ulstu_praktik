@@ -6,6 +6,7 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from SettingsWindow import SettingsWindow
+from database.connection import DBConnection
 from ui.py_ui_files.ui_main import Ui_MainWindow
 from ui.py_ui_files.ui_settings_ignore import Ui_Dialog as ui_settings_ignore_dialog
 from sheet_format import sheet_settings as format_settings, sheet_formating as format_do
@@ -40,6 +41,7 @@ class WorkerDoFormat(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.db_conn = DBConnection()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -127,8 +129,8 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
 
     def get_sql_script(self):
-        #TODO(get_sql_script)
-        return
+        self.db_conn.test()
+        # TODO(get_sql_script)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
