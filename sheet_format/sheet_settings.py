@@ -510,7 +510,7 @@ DPO_GS_1 = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'DPO', 'value_type', 'value_name'],
-    'csv_path': 'DPO_GS.csv'
+    'csv_path': 'DPO_GS_1.csv'
 }
 
 DPO_GS_2 = {
@@ -534,7 +534,7 @@ DPO_GS_2 = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'DPO', 'value_type', 'value_name'],
-    'csv_path': 'DPO_GS.csv'
+    'csv_path': 'DPO_GS_2.csv'
 }
 
 DPO_GS_other_1 = {
@@ -553,7 +553,7 @@ DPO_GS_other_1 = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'DPO_type', 'value_type'],
-    'csv_path': 'DPO_GS_other.csv'
+    'csv_path': 'DPO_GS_other_1.csv'
 }
 
 DPO_GS_other_2 = {
@@ -571,7 +571,7 @@ DPO_GS_other_2 = {
         ]
     ],
     'm_id_names': ['id_SubFed', 'DPO_type', 'value_type'],
-    'csv_path': 'DPO_GS_other.csv'
+    'csv_path': 'DPO_GS_other_2.csv'
 }
 
 DPO_GS_other_3 = {

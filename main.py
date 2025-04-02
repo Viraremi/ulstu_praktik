@@ -24,14 +24,18 @@ class WorkerDoFormat(QThread):
 
     def run(self):
         self.signal.emit("Обработка...", True)
-        format_do.start_format(
-            self.sheet_settings,
-            self.mode,
-            self.file_path,
-            self.file_year,
-            self.save_path,
-            self.ignore_sheet)
-        self.signal.emit("Готово!", False)
+        try:
+            format_do.start_format(
+                self.sheet_settings,
+                self.mode,
+                self.file_path,
+                self.file_year,
+                self.save_path,
+                self.ignore_sheet)
+            self.signal.emit("Готово!", False)
+        except Exception as e:
+            self.signal.emit("Форматирование не удалось!", False)
+            print(e)
 
 class MainWindow(QMainWindow):
     def __init__(self):
