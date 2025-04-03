@@ -1,0 +1,27 @@
+@startuml deployment
+node "Сервер базы данных" {
+    database "PostgreSQL" as postgre
+}
+
+node "Сервер ViQube" {
+    [ViQube] as viqube
+}
+
+node "ПК пользователя" {
+    component "Приложение обработки данных" {
+        [Соединение с БД] as db_conn
+        [Редактирование настроек] as stngs_rdct
+        [Форматирование данных] as format
+    }
+}
+
+node "Сервер Visiology" {
+    [Visiology API] as api
+    [Дашборд] as dash
+}
+
+postgre --> viqube
+viqube --> api
+db_conn --> postgre
+dash <-- api
+@enduml
