@@ -9,8 +9,8 @@ from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBo
 
 from database.connection import DBConnection
 from SettingsWindow import SettingsWindow
-from sheet_format import sheet_formating as format_do
-from sheet_format import sheet_settings as format_settings
+from sheet_format.sheet_formating import UlskFormater, FullFormater, BaseFormater
+from sheet_format.sheet_settings import get_settings
 from ui.py_ui_files.ui_main import Ui_MainWindow
 from ui.py_ui_files.ui_settings_ignore import Ui_Dialog
 
@@ -20,7 +20,8 @@ SETTINGS_FILE = "all_settings.json"
 class WorkerDoFormat(QThread):
     signal = Signal(str, bool)
 
-    def __init__(self, sheet_settings, mode: bool, file_path, file_year, save_path, ignore_sheet):
+    def __init__(self, sheet_settings: dict, mode: BaseFormater, file_path: str, file_year: int, save_path: str,
+                 ignore_sheet: set):
         super().__init__()
         self.sheet_settings = sheet_settings
         self.mode = mode
@@ -32,13 +33,8 @@ class WorkerDoFormat(QThread):
     def run(self):
         self.signal.emit("Обработка...", True)
         try:
-            format_do.start_format(
-                self.sheet_settings,
-                self.mode,
-                self.file_path,
-                self.file_year,
-                self.save_path,
-                self.ignore_sheet)
+            self.mode.start_format(self.sheet_settings, self.file_path, self.file_year,
+                                   self.save_path, self.ignore_sheet)
             self.signal.emit("Готово!", False)
         except Exception as e:
             self.signal.emit("Форматирование не удалось!", False)
@@ -65,17 +61,18 @@ class MainWindow(QMainWindow):
         self.ui.actionGetSQL.triggered.connect(self.get_sql_script)
 
         self.window_settings = None
-        self.ignore_list = []
+        self.ignore_list = set()
 
-    def get_mode(self):
+    def get_mode(self) -> BaseFormater:
         if self.ui.radioBtnFullFile.isChecked():
-            return True
+            return FullFormater()
         elif self.ui.radioBtnULFile.isChecked():
-            return False
+            return UlskFormater()
+        raise ValueError('Ни один чек бокс не выбран')
 
     def start_format_async(self):
         self.worker = WorkerDoFormat(
-            format_settings.get_settings(),
+            get_settings(),
             self.get_mode(),
             self.ui.textEditSelectedFilePath.toPlainText(),
             self.ui.spinBoxFileYear.value(),
@@ -105,7 +102,7 @@ class MainWindow(QMainWindow):
         self.ui_settings.btnSaveSelect.clicked.connect(self.save_ignore_list)
 
         self.ui_settings.listWidgetSheetsList.clear()
-        self.ui_settings.listWidgetSheetsList.addItems(format_settings.get_settings())
+        self.ui_settings.listWidgetSheetsList.addItems(get_settings())
 
     def save_ignore_list(self):
         selected_items = self.ui_settings.listWidgetSheetsList.selectedItems()
