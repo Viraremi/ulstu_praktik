@@ -2,17 +2,24 @@ import json
 import shutil
 import sys
 from datetime import datetime
+
 from PySide6 import QtWidgets
 from PySide6.QtCore import QThread, Signal
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
+
+from database.connection import DBConnection
 from SettingsWindow import SettingsWindow
+from sheet_format import sheet_formating as format_do
+from sheet_format import sheet_settings as format_settings
 from ui.py_ui_files.ui_main import Ui_MainWindow
-from ui.py_ui_files.ui_settings_ignore import Ui_Dialog as ui_settings_ignore_dialog
-from sheet_format import sheet_settings as format_settings, sheet_formating as format_do
+from ui.py_ui_files.ui_settings_ignore import Ui_Dialog
+
 SETTINGS_FILE = "all_settings.json"
+
 
 class WorkerDoFormat(QThread):
     signal = Signal(str, bool)
+
     def __init__(self, sheet_settings, mode: bool, file_path, file_year, save_path, ignore_sheet):
         super().__init__()
         self.sheet_settings = sheet_settings
@@ -24,18 +31,24 @@ class WorkerDoFormat(QThread):
 
     def run(self):
         self.signal.emit("Обработка...", True)
-        format_do.start_format(
-            self.sheet_settings,
-            self.mode,
-            self.file_path,
-            self.file_year,
-            self.save_path,
-            self.ignore_sheet)
-        self.signal.emit("Готово!", False)
+        try:
+            format_do.start_format(
+                self.sheet_settings,
+                self.mode,
+                self.file_path,
+                self.file_year,
+                self.save_path,
+                self.ignore_sheet)
+            self.signal.emit("Готово!", False)
+        except Exception as e:
+            self.signal.emit("Форматирование не удалось!", False)
+            print(e)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.db_conn = DBConnection()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -55,8 +68,10 @@ class MainWindow(QMainWindow):
         self.ignore_list = []
 
     def get_mode(self):
-        if self.ui.radioBtnFullFile.isChecked(): return True
-        elif self.ui.radioBtnULFile.isChecked(): return False
+        if self.ui.radioBtnFullFile.isChecked():
+            return True
+        elif self.ui.radioBtnULFile.isChecked():
+            return False
 
     def start_format_async(self):
         self.worker = WorkerDoFormat(
@@ -75,15 +90,15 @@ class MainWindow(QMainWindow):
 
     def open_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Выберите файл", "", "Файл (*.xlsx)")
-        if file_path: self.ui.textEditSelectedFilePath.setText(file_path)
+        self.ui.textEditSelectedFilePath.setText(file_path) if file_path else None
 
     def select_result_path(self):
         folder_path = QFileDialog.getExistingDirectory(self, "Выберите папку")
-        if folder_path: self.ui.textEditResultPath.setText(folder_path)
+        self.ui.textEditResultPath.setText(folder_path) if folder_path else None
 
     def open_window_settings_ignore(self):
         self.new_window = QtWidgets.QDialog()
-        self.ui_settings = ui_settings_ignore_dialog()
+        self.ui_settings = Ui_Dialog()
         self.ui_settings.setupUi(self.new_window)
         self.new_window.setWindowTitle("Игнорируемые листы")
         self.new_window.show()
@@ -117,14 +132,15 @@ class MainWindow(QMainWindow):
                 QMessageBox.critical(self, "Ошибка", f"Ошибка при импорте файла: {e}")
 
     def export_settings(self):
-        file_path, _ = QFileDialog.getSaveFileName(self,  "Экспортировать", "", "JSON Files (*.json)")
+        file_path, _ = QFileDialog.getSaveFileName(self, "Экспортировать", "", "JSON Files (*.json)")
         if file_path:
             shutil.copy(SETTINGS_FILE, file_path)
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
 
     def get_sql_script(self):
-        #TODO(get_sql_script)
-        return
+        self.db_conn.test()
+        # TODO(get_sql_script)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

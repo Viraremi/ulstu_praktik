@@ -1,6 +1,5 @@
-/.venv/
-/.ipynb_checkpoints/
-/.idea/
-/data_xlsx/
+.venv/
+.ipynb_checkpoints/
+.idea/
+data_xlsx/
 *.csv
-/sheet_format/all_settings.json
