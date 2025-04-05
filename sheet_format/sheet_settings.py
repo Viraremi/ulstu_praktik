@@ -1,5 +1,7 @@
 import json
 
+from sheet_format.model_settings import Setting
+
 Amount_GS = {
     'sheet': '1.1. Кол-во ГС',
     'iloc_rows': [6, 20],
@@ -607,51 +609,53 @@ DPO_MS = {
 }
 
 default_settings = {
-    'Amount_GS': Amount_GS,
-    'Amount_MS': Amount_MS,
-    'Gender_GS': Gender_GS,
-    'Gender_MS': Gender_MS,
-    'Age_GS': Age_GS,
-    'Age_MS': Age_MS,
-    'EducationLevel_GS': EducationLevel_GS,
-    'EducationLevel_MS': EducationLevel_MS,
-    'Educ_spec_GS': Educ_spec_GS,
-    'Educ_spec_MS': Educ_spec_MS,
-    'AcademicDegree_GS': AcademicDegree_GS,
-    'AcademicDegree_MS': AcademicDegree_MS,
-    'Exp_GS': Exp_GS,
-    'Exp_MS': Exp_MS,
-    'Changeability_GS': Changeability_GS,
-    'GosOrgAmount': GosOrgAmount,
-    'Competition': Competition,
-    'CitizenParticipation': CitizenParticipation,
-    'Substitution': Substitution,
-    'Mentoring': Mentoring,
-    'ReserveComposition': ReserveComposition,
-    'ReserveCause': ReserveCause,
-    'Attestation': Attestation,
-    'Ranks': Ranks,
-    'ProfDev_amount': ProfDev_amount,
-    'ProfDev_resources': ProfDev_resources,
-    'DPO_GS_1': DPO_GS_1,
-    'DPO_GS_2': DPO_GS_2,
-    'DPO_GS_other_1': DPO_GS_other_1,
-    'DPO_GS_other_2': DPO_GS_other_2,
-    'DPO_GS_other_3': DPO_GS_other_3,
-    'DPO_MS': DPO_MS
+    'Amount_GS': Setting(**Amount_GS),
+    'Amount_MS': Setting(**Amount_MS),
+    'Gender_GS': Setting(**Gender_GS),
+    'Gender_MS': Setting(**Gender_MS),
+    'Age_GS': Setting(**Age_GS),
+    'Age_MS': Setting(**Age_MS),
+    'EducationLevel_GS': Setting(**EducationLevel_GS),
+    'EducationLevel_MS': Setting(**EducationLevel_MS),
+    'Educ_spec_GS': Setting(**Educ_spec_GS),
+    'Educ_spec_MS': Setting(**Educ_spec_MS),
+    'AcademicDegree_GS': Setting(**AcademicDegree_GS),
+    'AcademicDegree_MS': Setting(**AcademicDegree_MS),
+    'Exp_GS': Setting(**Exp_GS),
+    'Exp_MS': Setting(**Exp_MS),
+    'Changeability_GS': Setting(**Changeability_GS),
+    'GosOrgAmount': Setting(**GosOrgAmount),
+    'Competition': Setting(**Competition),
+    'CitizenParticipation': Setting(**CitizenParticipation),
+    'Substitution': Setting(**Substitution),
+    'Mentoring': Setting(**Mentoring),
+    'ReserveComposition': Setting(**ReserveComposition),
+    'ReserveCause': Setting(**ReserveCause),
+    'Attestation': Setting(**Attestation),
+    'Ranks': Setting(**Ranks),
+    'ProfDev_amount': Setting(**ProfDev_amount),
+    'ProfDev_resources': Setting(**ProfDev_resources),
+    'DPO_GS_1': Setting(**DPO_GS_1),
+    'DPO_GS_2': Setting(**DPO_GS_2),
+    'DPO_GS_other_1': Setting(**DPO_GS_other_1),
+    'DPO_GS_other_2': Setting(**DPO_GS_other_2),
+    'DPO_GS_other_3': Setting(**DPO_GS_other_3),
+    'DPO_MS': Setting(**DPO_MS)
 }
 
 
-def update_or_reset_settings(settings: dict = None):
+def update_or_reset_settings(settings: dict = None) -> None:
     print('Генерация файла настроек...')
-    all_settings = default_settings if settings is None else settings
-    json_string = json.dumps(all_settings, ensure_ascii=False, indent=4)
+    if settings is None:
+        json_string = default_settings.model_dump_json()
+    else:
+        json_string = json.dumps(settings, ensure_ascii=False, indent=4)
     with open("all_settings.json", "w", encoding="utf-8") as file:
         file.write(json_string)
     print('SUCCESS')
 
 
-def get_json_string():
+def get_json_string() -> str:
     try:
         with open("all_settings.json", "r", encoding="utf-8") as file:
             json_string = json.load(file)
@@ -661,11 +665,13 @@ def get_json_string():
         return ""
 
 
-def get_settings():
+def get_settings() -> dict[str, Setting]:
     try:
         with open("all_settings.json", "r", encoding="utf-8") as file:
-            json_string = json.load(file)
+            dict_data: dict = json.load(file)
             print("Настройки форматирования получены!")
-        return json_string
+        for key, value in dict_data.items():
+            dict_data[key] = Setting(**value)
+        return dict_data
     except FileNotFoundError:
         return {}

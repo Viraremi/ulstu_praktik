@@ -3,4 +3,6 @@
 .idea/
 data_xlsx/
 *.csv
-.idea
+/.idea
+all_settings.json
+/all_settings.json

@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBo
 
 from database.connection import DBConnection
 from SettingsWindow import SettingsWindow
+from sheet_format.model_settings import Setting
 from sheet_format.sheet_formating import UlskFormater, FullFormater, BaseFormater
 from sheet_format.sheet_settings import get_settings
 from ui.py_ui_files.ui_main import Ui_MainWindow
@@ -20,8 +21,8 @@ SETTINGS_FILE = "all_settings.json"
 class WorkerDoFormat(QThread):
     signal = Signal(str, bool)
 
-    def __init__(self, sheet_settings: dict, mode: BaseFormater, file_path: str, file_year: int, save_path: str,
-                 ignore_sheet: set):
+    def __init__(self, sheet_settings: [str, Setting], mode: BaseFormater, file_path: str, file_year: int,
+                 save_path: str, ignore_sheet: set):
         super().__init__()
         self.sheet_settings = sheet_settings
         self.mode = mode
