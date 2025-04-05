@@ -1,5 +1,6 @@
 import psycopg2
 
+
 class DBConnection:
     def __init__(self):
         self.conn = psycopg2.connect(
@@ -9,7 +10,7 @@ class DBConnection:
             port=5431,
             dbname="kadri_test"
         )
-        if self.conn: print("подключено")
+        print("подключено")
         self.cursor = self.conn.cursor()
 
     def test(self):
