@@ -1,5 +1,6 @@
 import json
 
+from config_project import Const
 from sheet_format.model_settings import Setting
 
 Amount_GS = {
@@ -609,55 +610,62 @@ DPO_MS = {
 }
 
 default_settings = {
-    'Amount_GS': Setting(**Amount_GS),
-    'Amount_MS': Setting(**Amount_MS),
-    'Gender_GS': Setting(**Gender_GS),
-    'Gender_MS': Setting(**Gender_MS),
-    'Age_GS': Setting(**Age_GS),
-    'Age_MS': Setting(**Age_MS),
-    'EducationLevel_GS': Setting(**EducationLevel_GS),
-    'EducationLevel_MS': Setting(**EducationLevel_MS),
-    'Educ_spec_GS': Setting(**Educ_spec_GS),
-    'Educ_spec_MS': Setting(**Educ_spec_MS),
-    'AcademicDegree_GS': Setting(**AcademicDegree_GS),
-    'AcademicDegree_MS': Setting(**AcademicDegree_MS),
-    'Exp_GS': Setting(**Exp_GS),
-    'Exp_MS': Setting(**Exp_MS),
-    'Changeability_GS': Setting(**Changeability_GS),
-    'GosOrgAmount': Setting(**GosOrgAmount),
-    'Competition': Setting(**Competition),
-    'CitizenParticipation': Setting(**CitizenParticipation),
-    'Substitution': Setting(**Substitution),
-    'Mentoring': Setting(**Mentoring),
-    'ReserveComposition': Setting(**ReserveComposition),
-    'ReserveCause': Setting(**ReserveCause),
-    'Attestation': Setting(**Attestation),
-    'Ranks': Setting(**Ranks),
-    'ProfDev_amount': Setting(**ProfDev_amount),
-    'ProfDev_resources': Setting(**ProfDev_resources),
-    'DPO_GS_1': Setting(**DPO_GS_1),
-    'DPO_GS_2': Setting(**DPO_GS_2),
-    'DPO_GS_other_1': Setting(**DPO_GS_other_1),
-    'DPO_GS_other_2': Setting(**DPO_GS_other_2),
-    'DPO_GS_other_3': Setting(**DPO_GS_other_3),
-    'DPO_MS': Setting(**DPO_MS)
+    'Amount_GS': Amount_GS,
+    'Amount_MS': Amount_MS,
+    'Gender_GS': Gender_GS,
+    'Gender_MS': Gender_MS,
+    'Age_GS': Age_GS,
+    'Age_MS': Age_MS,
+    'EducationLevel_GS': EducationLevel_GS,
+    'EducationLevel_MS': EducationLevel_MS,
+    'Educ_spec_GS': Educ_spec_GS,
+    'Educ_spec_MS': Educ_spec_MS,
+    'AcademicDegree_GS': AcademicDegree_GS,
+    'AcademicDegree_MS': AcademicDegree_MS,
+    'Exp_GS': Exp_GS,
+    'Exp_MS': Exp_MS,
+    'Changeability_GS': Changeability_GS,
+    'GosOrgAmount': GosOrgAmount,
+    'Competition': Competition,
+    'CitizenParticipation': CitizenParticipation,
+    'Substitution': Substitution,
+    'Mentoring': Mentoring,
+    'ReserveComposition': ReserveComposition,
+    'ReserveCause': ReserveCause,
+    'Attestation': Attestation,
+    'Ranks': Ranks,
+    'ProfDev_amount': ProfDev_amount,
+    'ProfDev_resources': ProfDev_resources,
+    'DPO_GS_1': DPO_GS_1,
+    'DPO_GS_2': DPO_GS_2,
+    'DPO_GS_other_1': DPO_GS_other_1,
+    'DPO_GS_other_2': DPO_GS_other_2,
+    'DPO_GS_other_3': DPO_GS_other_3,
+    'DPO_MS': DPO_MS
 }
 
 
-def update_or_reset_settings(settings: dict = None) -> None:
+def create_settings_for_test() -> None:
     print('Генерация файла настроек...')
-    if settings is None:
-        json_string = default_settings.model_dump_json()
-    else:
-        json_string = json.dumps(settings, ensure_ascii=False, indent=4)
-    with open("all_settings.json", "w", encoding="utf-8") as file:
+    json_string = json.dumps(default_settings, ensure_ascii=False, indent=4)
+    with open(Const.SETTINGS_FILE, "w", encoding="utf-8") as file:
+        file.write(json_string)
+    print('SUCCESS')
+
+
+def update_or_reset_settings(settings: dict[str, Setting]) -> None:
+    print('Обновление файла настроек...')
+    for key, value in settings.items():
+        settings[key] = value.model_dump()
+    json_string = json.dumps(settings, ensure_ascii=False, indent=4)
+    with open(Const.SETTINGS_FILE, "w", encoding="utf-8") as file:
         file.write(json_string)
     print('SUCCESS')
 
 
 def get_json_string() -> str:
     try:
-        with open("all_settings.json", "r", encoding="utf-8") as file:
+        with open(Const.SETTINGS_FILE, "r", encoding="utf-8") as file:
             json_string = json.load(file)
             print("Настройки форматирования получены!")
         return json.dumps(json_string, ensure_ascii=False, indent=4)
@@ -667,7 +675,7 @@ def get_json_string() -> str:
 
 def get_settings() -> dict[str, Setting]:
     try:
-        with open("all_settings.json", "r", encoding="utf-8") as file:
+        with open(Const.SETTINGS_FILE, "r", encoding="utf-8") as file:
             dict_data: dict = json.load(file)
             print("Настройки форматирования получены!")
         for key, value in dict_data.items():

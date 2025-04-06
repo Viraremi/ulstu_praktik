@@ -7,6 +7,7 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
+from config_project import Const
 from database.connection import DBConnection
 from SettingsWindow import SettingsWindow
 from sheet_format.model_settings import Setting
@@ -14,8 +15,6 @@ from sheet_format.sheet_formating import UlskFormater, FullFormater, BaseFormate
 from sheet_format.sheet_settings import get_settings
 from ui.py_ui_files.ui_main import Ui_MainWindow
 from ui.py_ui_files.ui_settings_ignore import Ui_Dialog
-
-SETTINGS_FILE = "all_settings.json"
 
 
 class WorkerDoFormat(QThread):
@@ -122,7 +121,7 @@ class MainWindow(QMainWindow):
             try:
                 with open(file_path, "r", encoding="utf-8") as f:
                     json.load(f)
-                shutil.copy(file_path, SETTINGS_FILE)
+                shutil.copy(file_path, Const.SETTINGS_FILE)
                 QMessageBox.information(self, "Успех", "Настройки успешно импортированы!")
             except json.JSONDecodeError:
                 QMessageBox.critical(self, "Ошибка", "Выбранный файл не является корректным JSON!")
@@ -132,7 +131,7 @@ class MainWindow(QMainWindow):
     def export_settings(self):
         file_path, _ = QFileDialog.getSaveFileName(self, "Экспортировать", "", "JSON Files (*.json)")
         if file_path:
-            shutil.copy(SETTINGS_FILE, file_path)
+            shutil.copy(Const.SETTINGS_FILE, file_path)
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
 
     def get_sql_script(self):

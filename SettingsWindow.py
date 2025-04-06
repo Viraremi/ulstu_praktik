@@ -58,12 +58,12 @@ class SettingsWindow(QMainWindow):
             iloc_columns=[int(item) for item in self.add_window_ui.textEditIlocColumns.toPlainText().split('\n')],
             drop_column=[int(item) for item in self.add_window_ui.textEditDropColumns.toPlainText().split('\n')],
             m_id_lists=[_.split('\n') for _ in self.add_window_ui.textEditMIdLists.toPlainText().split('\n\n')],
-            m_id_names=[_.split('\n') for _ in self.add_window_ui.textEditMIdNames.toPlainText().split('\n\n')],
+            m_id_names=[_ for _ in self.add_window_ui.textEditMIdNames.toPlainText().split('\n')],
             csv_path=self.add_window_ui.lineEditCSVPath.text()
         )
         self.settings_list[new_sheet.sheet] = new_sheet
         update_or_reset_settings(self.settings_list)
-        QMessageBox.information(self, "Готово!", f"Лист \"{new_sheet['sheet']}\" создан")
+        QMessageBox.information(self, "Готово!", f"Лист \"{new_sheet.sheet}\" создан")
         self.add_window.close()
 
     def delete_selected_sheet(self):
