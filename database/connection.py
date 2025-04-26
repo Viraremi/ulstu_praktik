@@ -1,14 +1,16 @@
 import psycopg2
 
+from config_project import Const
+
 
 class DBConnection:
     def __init__(self):
         self.conn = psycopg2.connect(
-            host="127.0.0.1",
-            user="postgres",
-            password="123",
-            port=5431,
-            dbname="kadri_test"
+            host=Const.DB_HOST,
+            user=Const.DB_USER,
+            password=Const.DB_PASSWORD,
+            port=Const.DB_PORT,
+            dbname=Const.DB_NAME
         )
         print("подключено")
         self.cursor = self.conn.cursor()

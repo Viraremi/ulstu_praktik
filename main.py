@@ -7,20 +7,21 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
+from config_project import Const
 from database.connection import DBConnection
 from SettingsWindow import SettingsWindow
-from sheet_format import sheet_formating as format_do
-from sheet_format import sheet_settings as format_settings
+from sheet_format.model_settings import Setting
+from sheet_format.sheet_formating import UlskFormater, FullFormater, BaseFormater
+from sheet_format.sheet_settings import get_settings
 from ui.py_ui_files.ui_main import Ui_MainWindow
 from ui.py_ui_files.ui_settings_ignore import Ui_Dialog
-
-SETTINGS_FILE = "all_settings.json"
 
 
 class WorkerDoFormat(QThread):
     signal = Signal(str, bool)
 
-    def __init__(self, sheet_settings, mode: bool, file_path, file_year, save_path, ignore_sheet):
+    def __init__(self, sheet_settings: [str, Setting], mode: BaseFormater, file_path: str, file_year: int,
+                 save_path: str, ignore_sheet: set):
         super().__init__()
         self.sheet_settings = sheet_settings
         self.mode = mode
@@ -32,13 +33,8 @@ class WorkerDoFormat(QThread):
     def run(self):
         self.signal.emit("Обработка...", True)
         try:
-            format_do.start_format(
-                self.sheet_settings,
-                self.mode,
-                self.file_path,
-                self.file_year,
-                self.save_path,
-                self.ignore_sheet)
+            self.mode.start_format(self.sheet_settings, self.file_path, self.file_year,
+                                   self.save_path, self.ignore_sheet)
             self.signal.emit("Готово!", False)
         except Exception as e:
             self.signal.emit("Форматирование не удалось!", False)
@@ -65,17 +61,18 @@ class MainWindow(QMainWindow):
         self.ui.actionGetSQL.triggered.connect(self.get_sql_script)
 
         self.window_settings = None
-        self.ignore_list = []
+        self.ignore_list = set()
 
-    def get_mode(self):
+    def get_mode(self) -> BaseFormater:
         if self.ui.radioBtnFullFile.isChecked():
-            return True
+            return FullFormater()
         elif self.ui.radioBtnULFile.isChecked():
-            return False
+            return UlskFormater()
+        raise ValueError('Ни один чек бокс не выбран')
 
     def start_format_async(self):
         self.worker = WorkerDoFormat(
-            format_settings.get_settings(),
+            get_settings(),
             self.get_mode(),
             self.ui.textEditSelectedFilePath.toPlainText(),
             self.ui.spinBoxFileYear.value(),
@@ -105,7 +102,7 @@ class MainWindow(QMainWindow):
         self.ui_settings.btnSaveSelect.clicked.connect(self.save_ignore_list)
 
         self.ui_settings.listWidgetSheetsList.clear()
-        self.ui_settings.listWidgetSheetsList.addItems(format_settings.get_settings())
+        self.ui_settings.listWidgetSheetsList.addItems(get_settings())
 
     def save_ignore_list(self):
         selected_items = self.ui_settings.listWidgetSheetsList.selectedItems()
@@ -124,7 +121,7 @@ class MainWindow(QMainWindow):
             try:
                 with open(file_path, "r", encoding="utf-8") as f:
                     json.load(f)
-                shutil.copy(file_path, SETTINGS_FILE)
+                shutil.copy(file_path, Const.SETTINGS_FILE)
                 QMessageBox.information(self, "Успех", "Настройки успешно импортированы!")
             except json.JSONDecodeError:
                 QMessageBox.critical(self, "Ошибка", "Выбранный файл не является корректным JSON!")
@@ -134,7 +131,7 @@ class MainWindow(QMainWindow):
     def export_settings(self):
         file_path, _ = QFileDialog.getSaveFileName(self, "Экспортировать", "", "JSON Files (*.json)")
         if file_path:
-            shutil.copy(SETTINGS_FILE, file_path)
+            shutil.copy(Const.SETTINGS_FILE, file_path)
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
 
     def get_sql_script(self):

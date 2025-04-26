@@ -1,5 +1,8 @@
 import json
 
+from config_project import Const
+from sheet_format.model_settings import Setting
+
 Amount_GS = {
     'sheet': '1.1. Кол-во ГС',
     'iloc_rows': [6, 20],
@@ -642,18 +645,27 @@ default_settings = {
 }
 
 
-def update_or_reset_settings(settings: dict = None):
+def create_settings_for_test() -> None:
     print('Генерация файла настроек...')
-    all_settings = default_settings if settings is None else settings
-    json_string = json.dumps(all_settings, ensure_ascii=False, indent=4)
-    with open("all_settings.json", "w", encoding="utf-8") as file:
+    json_string = json.dumps(default_settings, ensure_ascii=False, indent=4)
+    with open(Const.SETTINGS_FILE, "w", encoding="utf-8") as file:
         file.write(json_string)
     print('SUCCESS')
 
 
-def get_json_string():
+def update_or_reset_settings(settings: dict[str, Setting]) -> None:
+    print('Обновление файла настроек...')
+    for key, value in settings.items():
+        settings[key] = value.model_dump()
+    json_string = json.dumps(settings, ensure_ascii=False, indent=4)
+    with open(Const.SETTINGS_FILE, "w", encoding="utf-8") as file:
+        file.write(json_string)
+    print('SUCCESS')
+
+
+def get_json_string() -> str:
     try:
-        with open("all_settings.json", "r", encoding="utf-8") as file:
+        with open(Const.SETTINGS_FILE, "r", encoding="utf-8") as file:
             json_string = json.load(file)
             print("Настройки форматирования получены!")
         return json.dumps(json_string, ensure_ascii=False, indent=4)
@@ -661,11 +673,13 @@ def get_json_string():
         return ""
 
 
-def get_settings():
+def get_settings() -> dict[str, Setting]:
     try:
-        with open("all_settings.json", "r", encoding="utf-8") as file:
-            json_string = json.load(file)
+        with open(Const.SETTINGS_FILE, "r", encoding="utf-8") as file:
+            dict_data: dict = json.load(file)
             print("Настройки форматирования получены!")
-        return json_string
+        for key, value in dict_data.items():
+            dict_data[key] = Setting(**value)
+        return dict_data
     except FileNotFoundError:
         return {}
