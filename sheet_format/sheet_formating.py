@@ -1,8 +1,10 @@
 import os
 
+import pandas as pd
 from pandas import DataFrame, MultiIndex, read_excel
 
 from sheet_format.model_settings import Setting
+from database.connection import engine
 
 
 class BaseFormater:
@@ -27,7 +29,7 @@ class BaseFormater:
         return df
 
     def start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str,
-                     ignore_sheet: set, excel_to_csv=None):
+                     ignore_sheet: set, insert_to_base: bool, excel_to_csv=None):
         file_name = file_path.split("/")[-1]
 
         print('\nОткрываем файл ' + file_name)
@@ -37,6 +39,9 @@ class BaseFormater:
             df = excel_to_csv(file_path, file_year, settings)
             self.save_to_csv(df, 'CSVs/' + settings.csv_path, ';')
             self.save_to_csv(df, save_path + '/result/' + settings.csv_path, ';')
+            if insert_to_base:
+                insert_df = pd.read_csv(f"CSVs/{settings.csv_path}", sep=';')
+                insert_df.to_sql(key, engine, if_exists='append', index=False)
 
 
 class FullFormater(BaseFormater):
@@ -52,12 +57,14 @@ class FullFormater(BaseFormater):
         return df
 
     def start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str,
-                     ignore_sheet: set):
-        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet, self.excel_to_csv)
+                    ignore_sheet: set, insert_to_base: bool):
+        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet,
+                             insert_to_base, self.excel_to_csv)
 
 
 class UlskFormater(BaseFormater):
     def excel_to_csv(self, path: str, year: int, settings: Setting) -> DataFrame:
+        """Функции обработки для ульяновских файлов"""
         print('Обработка ' + settings.sheet + '...')
         df = self.data_frame_from_excel(path, settings)
         df = df.dropna(how='any')
@@ -72,5 +79,6 @@ class UlskFormater(BaseFormater):
         return df
 
     def start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str,
-                     ignore_sheet: set):
-        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet, self.excel_to_csv)
+                      ignore_sheet: set, insert_to_base: bool):
+        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet,
+                             insert_to_base, self.excel_to_csv)

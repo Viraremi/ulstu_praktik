@@ -228,8 +228,14 @@
    </property>
   </action>
   <action name="actionGetSQL">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Получить скрипт для загрузки в БД</string>
+    <string>Загрузить данные в БД</string>
    </property>
   </action>
  </widget>
