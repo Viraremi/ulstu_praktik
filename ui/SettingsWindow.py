@@ -3,10 +3,10 @@ from PySide6.QtWidgets import QMainWindow, QMessageBox
 
 from sheet_format.model_settings import Setting
 from sheet_format.sheet_settings import get_json_string, update_or_reset_settings, get_settings
-from ui.py_ui_files.ui_settings import Ui_SettingsWindow
-from ui.py_ui_files.ui_settings_add import Ui_Dialog as UIDialogAdd
-from ui.py_ui_files.ui_settings_del import Ui_Dialog as UIDialogDel
-from ui.py_ui_files.ui_settings_show import Ui_Dialog as UIDialogShow
+from ui.qt_designer.py_ui_files.ui_settings import Ui_SettingsWindow
+from ui.qt_designer.py_ui_files.ui_settings_add import Ui_Dialog as UIDialogAdd
+from ui.qt_designer.py_ui_files.ui_settings_del import Ui_Dialog as UIDialogDel
+from ui.qt_designer.py_ui_files.ui_settings_show import Ui_Dialog as UIDialogShow
 
 
 class SettingsWindow(QMainWindow):
