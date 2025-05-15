@@ -7,10 +7,10 @@ from PySide6.QtWidgets import QFileDialog, QMainWindow, QMessageBox
 
 from config_project import Const
 from database.connection import DBConnection
-from SettingsWindow import SettingsWindow
 from sheet_format.WorkerDoFormat import WorkerDoFormat
 from sheet_format.sheet_formating import UlskFormater, FullFormater, BaseFormater
 from sheet_format.sheet_settings import get_settings
+from ui.SettingsWindow import SettingsWindow
 from ui.qt_designer.py_ui_files.ui_main import Ui_MainWindow
 from ui.qt_designer.py_ui_files.ui_settings_ignore import Ui_Dialog
 
