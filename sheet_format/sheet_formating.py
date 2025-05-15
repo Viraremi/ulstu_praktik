@@ -58,6 +58,7 @@ class FullFormater(BaseFormater):
 
 class UlskFormater(BaseFormater):
     def excel_to_csv(self, path: str, year: int, settings: Setting) -> DataFrame:
+        """Функции обработки для ульяновских файлов"""
         print('Обработка ' + settings.sheet + '...')
         df = self.data_frame_from_excel(path, settings)
         df = df.dropna(how='any')
