@@ -649,3 +649,5 @@ def create_settings_for_test() -> None:
     with open(Const.SETTINGS_FILE, "w", encoding="utf-8") as file:
         file.write(json_string)
     print('SUCCESS')
+
+create_settings_for_test()

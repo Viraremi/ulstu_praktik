@@ -1,12 +1,14 @@
+import json
+
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMainWindow, QMessageBox
 
 from sheet_format.model_settings import Setting
-from sheet_format.sheet_settings import get_json_string, update_or_reset_settings, get_settings
+from sheet_format.sheet_settings import update_or_reset_settings, get_settings
 from ui.qt_designer.py_ui_files.ui_settings import Ui_SettingsWindow
 from ui.qt_designer.py_ui_files.ui_settings_add import Ui_Dialog as UIDialogAdd
 from ui.qt_designer.py_ui_files.ui_settings_del import Ui_Dialog as UIDialogDel
-from ui.qt_designer.py_ui_files.ui_settings_show import Ui_Dialog as UIDialogShow
+from ui.JsonWindow import JsonViewer
 
 
 class SettingsWindow(QMainWindow):
@@ -21,6 +23,7 @@ class SettingsWindow(QMainWindow):
         self.ui.btnSettingsShow.clicked.connect(self.btn_show)
 
         self.settings_list = get_settings()
+        self.json_window = None
 
     def btn_add(self):
         self.add_window = QtWidgets.QDialog()
@@ -42,14 +45,14 @@ class SettingsWindow(QMainWindow):
         self.del_window_ui.comboBoxSelectList.addItems(self.settings_list)
 
     def btn_show(self):
-        self.show_window = QtWidgets.QDialog()
-        self.show_window_ui = UIDialogShow()
-        self.show_window_ui.setupUi(self.show_window)
-        self.show_window.show()
-        self.show_window.setWindowTitle("Настройки")
-        text = get_json_string()
-        text = "" if text == "{}" else text
-        self.show_window_ui.textEditShowSettings.setText(text)
+        try:
+            with open("all_settings.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+            self.json_window = JsonViewer(data)
+            self.json_window.show()
+        except FileNotFoundError as e:
+            QMessageBox.information(self, "Настроек нет", "Нет заданных настроек")
+
 
     def new_sheet_save(self):
         new_sheet = Setting(
