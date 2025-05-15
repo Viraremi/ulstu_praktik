@@ -27,7 +27,7 @@ class BaseFormater:
         return df
 
     def start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str,
-                     ignore_sheet: set, excel_to_csv=None):
+                     ignore_sheet: set, insert_to_base: bool, excel_to_csv=None):
         file_name = file_path.split("/")[-1]
 
         print('\nОткрываем файл ' + file_name)
@@ -37,6 +37,9 @@ class BaseFormater:
             df = excel_to_csv(file_path, file_year, settings)
             self.save_to_csv(df, 'CSVs/' + settings.csv_path, ';')
             self.save_to_csv(df, save_path + '/result/' + settings.csv_path, ';')
+            if insert_to_base:
+                print("загружаем в базу")
+                # TODO(insert)
 
 
 class FullFormater(BaseFormater):
@@ -52,8 +55,9 @@ class FullFormater(BaseFormater):
         return df
 
     def start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str,
-                     ignore_sheet: set):
-        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet, self.excel_to_csv)
+                    ignore_sheet: set, insert_to_base: bool):
+        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet,
+                             insert_to_base, self.excel_to_csv)
 
 
 class UlskFormater(BaseFormater):
@@ -73,5 +77,6 @@ class UlskFormater(BaseFormater):
         return df
 
     def start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str,
-                     ignore_sheet: set):
-        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet, self.excel_to_csv)
+                      ignore_sheet: set, insert_to_base: bool):
+        super().start_format(sheet_settings, file_path, file_year, save_path, ignore_sheet,
+                             insert_to_base, self.excel_to_csv)

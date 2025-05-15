@@ -32,7 +32,6 @@ class MainWindow(QMainWindow):
         self.ui.actionOpenSheetSettingsWindow.triggered.connect(self.open_window_settings)
         self.ui.actionImport.triggered.connect(self.import_settings)
         self.ui.actionExport.triggered.connect(self.export_settings)
-        self.ui.actionGetSQL.triggered.connect(self.get_sql_script)
 
         self.window_settings = None
         self.ignore_list = set()
@@ -51,7 +50,9 @@ class MainWindow(QMainWindow):
             self.ui.textEditSelectedFilePath.toPlainText(),
             self.ui.spinBoxFileYear.value(),
             self.ui.textEditResultPath.toPlainText(),
-            self.ignore_list)
+            self.ignore_list,
+            self.ui.actionInsertData.isChecked()
+        )
         self.worker.signal.connect(self.update_status_label)
         self.worker.start()
 
@@ -107,7 +108,3 @@ class MainWindow(QMainWindow):
         if file_path:
             shutil.copy(Const.SETTINGS_FILE, file_path)
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
-
-    def get_sql_script(self):
-        self.db_conn.test()
-        # TODO(get_sql_script)
