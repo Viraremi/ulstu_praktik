@@ -1,8 +1,10 @@
 import os
 
+import pandas as pd
 from pandas import DataFrame, MultiIndex, read_excel
 
 from sheet_format.model_settings import Setting
+from database.connection import engine
 
 
 class BaseFormater:
@@ -38,8 +40,8 @@ class BaseFormater:
             self.save_to_csv(df, 'CSVs/' + settings.csv_path, ';')
             self.save_to_csv(df, save_path + '/result/' + settings.csv_path, ';')
             if insert_to_base:
-                print("загружаем в базу")
-                # TODO(insert)
+                insert_df = pd.read_csv(f"CSVs/{settings.csv_path}", sep=';')
+                insert_df.to_sql(key, engine, if_exists='append', index=False)
 
 
 class FullFormater(BaseFormater):
