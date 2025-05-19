@@ -30,6 +30,7 @@ class MainWindow(QMainWindow):
         self.ui.actionOpenSheetSettingsWindow.triggered.connect(self.open_window_settings)
         self.ui.actionImport.triggered.connect(self.import_settings)
         self.ui.actionExport.triggered.connect(self.export_settings)
+        self.ui.actionInsertData.toggled.connect(self.insertDataToggled)
 
         self.window_settings = None
         self.ignore_list = set()
@@ -106,3 +107,9 @@ class MainWindow(QMainWindow):
         if file_path:
             shutil.copy(Const.SETTINGS_FILE, file_path)
             QMessageBox.information(self, "Успех", "Файл настроек успешно экспортирован!")
+
+    def insertDataToggled(self, checked: bool):
+        if checked:
+            self.ui.btnDoFormatToCSV.setText("Обработать и загрузить в БД")
+        else:
+            self.ui.btnDoFormatToCSV.setText("Обработать")
