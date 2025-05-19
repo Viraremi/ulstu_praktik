@@ -30,7 +30,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Настройки листов</string>
+       <string>Параметры форматирования</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -51,7 +51,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Посмотреть имеющиеся настройки</string>
+         <string>Посмотреть параметры</string>
         </property>
        </widget>
       </item>
@@ -64,7 +64,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Добавить лист</string>
+         <string>Добавить параметр</string>
         </property>
        </widget>
       </item>
@@ -77,7 +77,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Удалить лист</string>
+         <string>Удалить параметр</string>
         </property>
        </widget>
       </item>

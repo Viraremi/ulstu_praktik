@@ -173,7 +173,7 @@
     <item>
      <widget class="QPushButton" name="btnDoFormatToCSV">
       <property name="text">
-       <string>Форматировать</string>
+       <string>Обработать и загрузить в БД</string>
       </property>
      </widget>
     </item>
@@ -209,7 +209,7 @@
   </widget>
   <action name="actionOpenSheetSettingsWindow">
    <property name="text">
-    <string>Открыть настройки листов</string>
+    <string>Открыть параметры форматирования</string>
    </property>
   </action>
   <action name="actionSettingsListIgnore">

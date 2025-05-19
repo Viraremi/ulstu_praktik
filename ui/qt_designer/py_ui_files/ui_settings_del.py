@@ -57,7 +57,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.labelSettingsDelHeader.setText(QCoreApplication.translate("Dialog", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u043b\u0438\u0441\u0442\u0430...", None))
+        self.labelSettingsDelHeader.setText(QCoreApplication.translate("Dialog", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440...", None))
         self.comboBoxSelectList.setItemText(0, QCoreApplication.translate("Dialog", u"\u041f\u0440\u0438\u043c\u0435\u04401", None))
         self.comboBoxSelectList.setItemText(1, QCoreApplication.translate("Dialog", u"\u041f\u0440\u0438\u043c\u0435\u04402", None))
 

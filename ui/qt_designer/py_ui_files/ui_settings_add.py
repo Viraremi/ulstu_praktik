@@ -130,7 +130,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.labelHeader.setText(QCoreApplication.translate("Dialog", u"\u041d\u043e\u0432\u044b\u0439 \u043b\u0438\u0441\u0442", None))
+        self.labelHeader.setText(QCoreApplication.translate("Dialog", u"\u041d\u043e\u0432\u044b\u0439 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440", None))
         self.labelSheet.setText(QCoreApplication.translate("Dialog", u"\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043b\u0438\u0441\u0442\u0430 (Sheet)", None))
         self.labelIlocRows.setText(QCoreApplication.translate("Dialog", u"\u0413\u0440\u0430\u043d\u0438\u0446\u044b \u0441\u0442\u0440\u043e\u043a (iloc_rows)", None))
         self.labelIlocColumns.setText(QCoreApplication.translate("Dialog", u"\u0413\u0440\u0430\u043d\u0438\u0446\u044b \u0441\u0442\u043e\u043b\u0431\u0446\u043e\u0432 (iloc_columns)", None))
