@@ -6,5 +6,6 @@ data_xlsx/
 /.idea
 all_settings.json
 /all_settings.json
-/ui_test.py
+/tests/ui_test.py
 /CSVs/
+*.xlsx
