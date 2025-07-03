@@ -1,0 +1,72 @@
+@startuml class
+title Диаграмма классов
+
+class MainWindow {
+    +get_mode(self) -> BaseFormater
+    +start_format_async(self)
+    +update_status_label(self, text, btn_disabled)
+    +open_file(self)
+    +select_result_path(self)
+    +open_window_settings_ignore(self)
+    +save_ignore_list(self)
+    +open_window_settings(self)
+    +import_settings(self)
+    +export_settings(self)
+    +send_to_DB(self)
+}
+
+class SettingsWindow {
+    settingsManager: Settings
+    +btn_add(self)
+    +btn_delete(self)
+    +btn_show(self)
+    +new_sheet_save(self)
+    +delete_selected_sheet(self)
+}
+
+abstract BaseFormater {
+    +save_to_csv(dataframe: DataFrame, file_path: str, separator: str) -> None
+    +data_frame_from_excel(path: str, settings: Setting) -> DataFrame
+    +start_format(self, sheet_settings: [str, Setting], file_path: str, file_year: int, save_path: str, ignore_sheet: set, excel_to_csv=None)
+}
+
+class UlskFormatter {
+    +excel_to_csv(self, path: str, year: int, settings: Setting) -> DataFrame
+}
+
+class FullFormatter {
+    excel_to_csv(self, path: str, year: int, settings: Setting) -> DataFrame
+}
+
+class SettingsViewModel {
+    +addSheet(string)
+    +removeSheet(string)
+    +ignoreSheet(string)
+    +getSettings() -> str
+}
+
+class Setting {
+    sheet: str
+    iloc_rows: list[int]
+    iloc_columns: list[int]
+    drop_column: list[int]
+    m_id_lists: list[list[str]]
+    m_id_names: list[str]
+    csv_path: str
+}
+
+class BDConnection {
+    +connect()
+    +executeQuery(query)
+}
+
+MainWindow o-- SettingsWindow
+MainWindow "1"<--"1" BDConnection
+MainWindow o-left- BaseFormater
+BaseFormater "1"<|--"1" UlskFormatter
+BaseFormater "1"<|--"1" FullFormatter
+UlskFormatter o-- Setting
+FullFormatter o-- Setting
+BaseFormater o-- Setting
+SettingsWindow *-- SettingsViewModel
+@enduml

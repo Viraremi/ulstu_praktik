@@ -1,0 +1,22 @@
+@startuml deployment
+node "Сервер" {
+    package "БД" {
+        database "PostgreSQL" as postgre
+        [ViQube] as viqube
+    }
+}
+
+node "ПК пользователя" {
+    [Приложение обработки данных] as app
+    frame "Браузер" {
+        [Портал Visiology] as dash
+    }
+}
+
+app -- psycopg2
+psycopg2 )- postgre
+postgre -> viqube
+viqube -- ViQubeAPI
+ViQubeAPI )-- dash
+
+@enduml

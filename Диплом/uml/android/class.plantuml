@@ -1,0 +1,297 @@
+@startuml class
+title Диаграмма классов
+
+package util {    
+    class Fragment
+    class RootActivity
+    class FragmentManager
+    class NavigationGraph
+}
+
+' Экран поиска
+package serach {
+    package ui {
+        class SearchFragment {
+            val viewmodel: SearchViewModel
+            +showResult()
+            +showHistory()
+            +showLoading()
+            +hideHistory()
+            +showError()
+        }
+        class TrackAdapter {
+            val click: Track -> Unit
+            val tracks: List<Track> 
+        }
+        class TrackViewHolder{
+            val trackName: TextView
+            val artistName: TextView
+            val trackTime: TextView
+            val trackImage: ImageView
+            +bind(itemview: View)
+        }
+        class SearchViewModel{
+            val getTrackUseCase: GetTrackUseCase
+            val historyInteractor: InteractorHistory
+            val stateRequest: LiveData<SearchState>
+            val stateHistory: LiveData<HistoryState>
+            +loadData(searchText: String)
+            +getState(): LiveData<SearchState>
+            +getHistoryState(): LiveData<HistoryState>
+        }
+    }
+    package domain {
+interface InteractorHistory {
+    +getHistory(): MutableList<Track>
+    +add(item: Track)
+    +clear()
+    +getIdByTrack(track: Track): Int?
+}
+interface RepositoryHistory {
+    +getHistory(): MutableList<Track>
+    +add(item: Track)
+    +clear()
+    +getIdByTrack(track: Track): Int?
+}
+interface RepositoryNetwork {
+    +getTracks(currency: String): Resource<List<Track>>
+}
+class InteractorHistoryImpl {
+    val repository: RepositoryHistory
+}
+class GetTrackUseCase {
+    val repository: RepositoryNetwork
+    val executor: Executor
+    +execute(searchText: String, consumer: Consumer<List<Track>>)
+}
+    }
+
+    package data {
+        class RepositoryHistoryImpl {
+    val sharedPref: SharedPreferences
+    val gson: Gson
+    +save()
+}
+class RepositoryNetworkRetrofitImpl {
+    val networkClient: ITunesNetworkClient
+}
+interface ITunesNetworkClient{
+    +getTracks(currency: String): NetworkResponse
+}
+interface ITunesAPI {
+    +getTrack(text: String) : Call<ResponseTracks>
+}
+class ITunesNetworkClientImpl {
+    val tracksAPI: ITunesAPI
+    +getTracks(currency: String): NetworkResponse
+}
+    }
+}
+
+Fragment <|-- SearchFragment
+SearchFragment <-- SearchViewModel
+SearchFragment <-- TrackAdapter
+TrackAdapter <-- TrackViewHolder
+
+SearchViewModel <-l- InteractorHistory
+InteractorHistory <|-- InteractorHistoryImpl
+InteractorHistoryImpl <-- RepositoryHistory
+
+SearchViewModel <-l- GetTrackUseCase
+GetTrackUseCase <-- RepositoryNetwork
+
+RepositoryNetwork <|-- RepositoryNetworkRetrofitImpl
+RepositoryHistory <|-- RepositoryHistoryImpl
+
+RepositoryNetworkRetrofitImpl <-- ITunesNetworkClient
+ITunesNetworkClient <-- ITunesNetworkClientImpl
+ITunesNetworkClientImpl <-- ITunesAPI
+
+' Экран настроек
+
+package settings {
+    package ui {
+class SettingsFragment {
+    viewmodel: SettingsViewModel
+}
+class SettingViewModel {
+    state: LiveData<SettingsState>
+    +getState(): LiveData<SettingsState>
+    +themeSwitch(flag: Boolean)
+    +shareApp(link: String)
+    +writeSupport(email: EmailData)
+    +openUA(link: String)
+}
+    }
+    package domain {
+        interface InteractorSettings {
+    +switchTheme(darkThemeEnabled: Boolean)
+    +getTheme(): Boolean
+}
+class InteractorSettingsImpl {
+    val repository: RepositorySettings
+}
+interface RepositorySettings {
+    +switchTheme(darkThemeEnabled: Boolean)
+    +getTheme(): Boolean
+}
+    }
+    package data {
+        class RepositorySettingsImpl {
+    val sharedPref: SharedPreferences
+}
+    }
+}
+
+package share {
+    package domain {
+interface InteractorShare {
+    +shareApp (link: String)
+    +writeToSupport (msg: EmailData)
+    +openUserAgreement (link: String)
+}
+class InteractorShareImpl {
+    val repository: RepositorySharing
+}
+interface RepositoryShare {
+    +shareApp (link: String)
+    +writeToSupport (msg: EmailData)
+    +openUserAgreement (link: String)
+}
+    }
+    package data {
+class RepositoryShareImpl {
+    val context: Context
+}
+    }
+}
+
+
+Fragment <|-- SettingsFragment
+SettingsFragment <-- SettingViewModel
+
+SettingViewModel <-- InteractorSettings
+InteractorSettings <|-- InteractorSettingsImpl
+InteractorSettingsImpl <-- RepositorySettings
+RepositorySettings <|-- RepositorySettingsImpl
+
+SettingViewModel <-- InteractorShare
+InteractorShare <|-- InteractorShareImpl
+InteractorShareImpl <-- RepositoryShare
+RepositoryShare <|-- RepositoryShareImpl
+
+' Экран плеера
+
+package player {
+    package ui {
+        class PlayerActivity {
+            val viewmodel: PlayerViewModel        
+        }
+        class PlayerViewModel {
+            val interactorPlayer: InteractorPlayer
+            val interactorHistory: InteractorHistory
+            +prepare(url: String)
+            +playbackControl()
+            +play()
+            +pause()
+            +release()
+            +getTrackById(index: Int): Track
+        }
+    }
+    package domain {
+        interface InteractorPlayer{
+                +prepare(url: String, onComplete: () -> Unit)
+                +play()
+                +pause()
+                +release()
+                +playbackControl()
+                +getPosition(): String
+                +getPlayerState(): PlayerState
+        }
+        class InteractorPlayerImpl{
+            val repository: RepositoryPlayer
+        }
+        interface RepositoryPlayer{
+                +prepare(url: String, onComplete: () -> Unit)
+                +play()
+                +pause()
+                +release()
+                +playbackControl()
+                +getPosition(): Int
+                +getPlayerState(): PlayerState
+        }
+    }
+    package data {
+        class RepositoryPlayerImpl {
+            var playerState
+            var mediaPlayer: MediaPlayer
+        
+        }
+    }
+
+}
+
+PlayerActivity <-- PlayerViewModel
+
+PlayerViewModel <-- InteractorHistory
+PlayerViewModel <-- InteractorPlayer
+InteractorPlayer <|-- InteractorPlayerImpl
+InteractorPlayerImpl <-- RepositoryPlayer
+RepositoryPlayer <|-- RepositoryPlayerImpl
+
+' Экран медиатеки
+
+package library {
+    package ui {
+        class FavoriteFragment {
+            val viewmodel: FavoriteViewModel
+            +newInstance()
+        }
+        class PlaylistsFragment {
+            val viewmodel: PlaylistsViewModel
+            +newInstance()
+        }
+        class LibraryFragment {
+            val viewmodel: LibraryViewModel
+            var tabMediator: TabLayoutMediator
+        }
+        class ViewPagerAdapter {
+            fragmentManager: FragmentManager,
+            lifecycle: Lifecycle
+            +getItemCount(): Int
+            +createFragment(position: Int): Fragment
+        }
+        class FavoriteViewModel {
+            +getState(): LiveData<FragmentFavoriteState>
+        }
+        class PlaylistsViewModel {
+            +getState(): LiveData<FragmentPlaylistState>
+        }
+        class LibraryViewModel {
+            +getState(): LiveData<LibraryViewState>
+        }
+    }
+}
+
+FavoriteFragment <-- FavoriteViewModel
+PlaylistsFragment <-- PlaylistsViewModel
+LibraryFragment <-- LibraryViewModel
+
+Fragment <|-- LibraryFragment
+Fragment <|-- FavoriteFragment
+Fragment <|-- PlaylistsFragment
+
+LibraryFragment <-- ViewPagerAdapter
+ViewPagerAdapter <-- FavoriteFragment
+ViewPagerAdapter <-- PlaylistsFragment
+
+' root
+
+
+
+RootActivity <- FragmentManager
+FragmentManager <- NavigationGraph
+NavigationGraph <-- Fragment
+NavigationGraph <-- PlayerActivity
+
+@enduml

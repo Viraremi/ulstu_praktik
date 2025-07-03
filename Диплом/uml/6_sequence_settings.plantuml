@@ -1,0 +1,38 @@
+@startuml sequence
+
+actor "Оператор данных" as Operator
+participant "Главное окно" as MainWindow
+participant "Окно настроек" as SettingsWindow
+participant "Диалоговое окно" as Dialog
+participant "Formatter (pandas)" as Formatter
+participant SettingsViewModel
+participant "BDConnection (psycopg2)" as DBConn
+database "PostgreSQL" as DB
+
+===Редактирование настроек форматирования==
+MainWindow -> SettingsWindow : Открыть окно\nнастроек
+
+==Просмотр настроек==
+SettingsWindow -> SettingsViewModel : Нажатие на кнопку\n"Показать настройки"
+SettingsViewModel --> Dialog : Показать имеющиеся\nнастройки
+Dialog --> SettingsWindow : Закрыть\nдилоговое окно
+
+==Добавление настроек листа==
+SettingsWindow -> Dialog : Нажатие на кнопку\n"Добавить настройки листа"
+Dialog -> Dialog : Задать параметры
+Dialog -> SettingsViewModel : Нажатие на кнопку "Добавить"
+SettingsViewModel -> SettingsViewModel : Создать настройку\nпо заданным параметрам
+SettingsViewModel --> Dialog : Показать сообщение\nо завершении
+Dialog --> SettingsWindow : Закрыть\nдилоговое окно
+
+==Удаление настроек листа==
+SettingsWindow -> Dialog : Нажатие на кнопку\n"Удалить настройки листа"
+Dialog -> Dialog : Выбрать настройку листа
+Dialog -> SettingsViewModel : Нажатие на кнопку "Удалить"
+SettingsViewModel -> SettingsViewModel : Удалить выбранную\nнастройку
+SettingsViewModel --> Dialog : Показать сообщение о завершении
+Dialog --> SettingsWindow : Закрыть\nдилоговое окно
+
+SettingsWindow --> MainWindow : Закрыть окно\nнастроек
+
+@enduml

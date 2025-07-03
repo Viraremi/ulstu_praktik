@@ -1,0 +1,36 @@
+@startuml class
+title Диаграмма классов
+
+class User {
+    +selectSheet(SheetId)
+    +setFilters(value, widgetGuid)
+}
+
+class Dashboard {
+    id: int
+    filters: Filter[]
+    visualizations: Vizualizations[]
+    +applyFilters(widgetGuid, values, handler)
+    +renderVizualization(dimensionsUniqueName, elements)
+    +updateData(string)
+    +getExcelData(SheetId, widgetGuid)
+}
+
+class List {
+    name: string
+    filters: Filter
+    +applyFilters(widgetGuid, values, handler)
+}
+
+class Filter {
+    id: int
+    name: string
+    value: string
+    +setFilters(value, widgetGuid)
+    +clearFilter(widgetGuid)
+}
+
+User "1"-->"*" List
+Dashboard "1"-->"*" List
+List "1"-->"*" Filter
+@enduml

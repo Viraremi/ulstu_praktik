@@ -1,0 +1,44 @@
+@startuml sequence
+
+actor "Оператор данных" as Operator
+participant "Главное окно" as MainWindow
+participant "Окно настроек" as SettingsWindow
+participant "Диалоговое окно" as Dialog
+participant "Formatter (pandas)" as Formatter
+participant SettingsViewModel
+participant "BDConnection (psycopg2)" as DBConn
+database "PostgreSQL" as DB
+
+==Обработка исходных данных==
+Operator -> MainWindow : Открыть приложение
+MainWindow -> MainWindow : Выбрать файл и\nпараметры
+MainWindow -> Formatter : Нажатие на кнопку "Форматирование"
+Formatter -> SettingsViewModel : Получить настройки\nформатирования
+SettingsViewModel --> Formatter : Настройки\nформатирования
+Formatter --> Dialog : Показать сообщение\nо завершении
+Dialog --> MainWindow : Закрыть дилоговое окно
+
+==Отправка данных в БД==
+MainWindow -> DBConn : Нажатие на кнопку "Отправить данные в БД"
+DBConn -> DB : connect()
+DB --> DBConn : OK
+DBConn -> DB : INSERT
+DB --> DBConn : OK
+DBConn --> Dialog : Показать сообщение о завершении отправки
+Dialog --> MainWindow : Закрыть дилоговое окно
+
+==Экспорт файла настроек==
+MainWindow -> Dialog : Нажатие на кнопку "Экспортировать настройки"
+Dialog -> SettingsViewModel : Выбор пути сохранения
+SettingsViewModel --> Operator : Json файл c настройками
+SettingsViewModel --> Dialog : Показать сообщение о завершении
+Dialog --> MainWindow : Закрыть дилоговое окно
+
+==Импорт файла настроек==
+MainWindow -> Dialog : Нажатие на кнопку "Импортировать настройки"
+Dialog -> SettingsViewModel : Выбор файла
+SettingsViewModel -> SettingsViewModel : Чтение настроек\nиз файла
+SettingsViewModel --> Dialog : Показать сообщение о завершении
+Dialog --> MainWindow : Закрыть дилоговое окно
+
+@enduml

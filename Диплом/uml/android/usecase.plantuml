@@ -1,0 +1,27 @@
+@startuml usecase
+title Диаграмма прецедентов
+left to right direction
+
+actor user 
+usecase "Поиск музыки" as search
+usecase "Настройки приложения" as settings
+usecase "Создание плейлистов" as playlist
+usecase "Прослушивание музыки" as player
+
+usecase "Просмотр истории поиска" as search_history
+usecase "Отправить письмо разработчику" as settings_mail
+usecase "Открыть пользовательское соглашение" as settings_ua
+usecase "Поделиться приложением" as settings_share
+usecase "Выбор темы приложения" as settings_theme
+
+user --> search
+search <.. search_history
+user --> settings
+settings <.. settings_mail
+settings <.. settings_share
+settings <.. settings_theme
+settings <.. settings_ua
+user --> playlist
+user --> player
+
+@enduml

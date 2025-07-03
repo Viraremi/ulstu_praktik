@@ -1,0 +1,39 @@
+@startuml usecase
+title Диаграмма прецедентов
+
+left to right direction
+
+actor "Оператор данных" as operator
+usecase "Загрузка данных в БД" as bd_update
+usecase "Форматирование исходных данных\n\nextension points\nКнопка "Игнорирование листов"" as formating
+usecase "Настройка параметров форматирования\n\nextension points\nНажатие соответствующей кнопки" as formating_settings
+usecase "Настройка игнорирования листов" as set_ignore
+usecase "Добавить параметр" as add_sheed
+usecase "Удалить параметр" as del_sheed
+usecase "Просмотр параметров" as show_all_settings
+usecase "Получить файл настроек" as get_settings_file
+
+operator --> bd_update
+operator --> get_settings_file
+
+operator --> formating
+set_ignore .up.> formating: extends
+formating ..> (Указать год файла): include
+formating ..> (Указать вид файла): include
+
+operator --> formating_settings
+add_sheed .up.> formating_settings: extends
+del_sheed .up.> formating_settings: extends
+show_all_settings .up.> formating_settings: extends
+
+actor "Аналитик" as analitic
+usecase "Просмотр дашбордов\n\nextension points\nКнопка "Выгрузить"\nВыбор фильтра на дашборде" as dashboard
+usecase "Выгрузка данных c дашборда" as data_from_dash
+usecase "Выбор фильров" as filter_for_dash
+usecase "Загрузка данных из ViQube" as viqube
+
+analitic --> dashboard
+dashboard ..> viqube: include
+data_from_dash .up.> dashboard: extends
+filter_for_dash .up.> dashboard: extends
+@enduml

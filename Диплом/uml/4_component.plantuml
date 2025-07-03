@@ -1,0 +1,25 @@
+@startuml component
+title Диаграмма компонентов
+
+component "Приложение обработки данных" {
+    [PySide6 GUI] as gui
+    [psycopg2] as db_conn
+    [pandas] as format
+}
+
+component "Сервер БД" {
+    database DB{
+        [PostgreSQL] as postgre
+    }
+    [ViQube] as viqube
+}
+
+component "Портал Visiology" {
+    [Веб-приложение (Дашборд)] as dash
+}
+
+postgre --> viqube
+ViQubeAPI - viqube
+postgre <-left- db_conn
+dash --( ViQubeAPI
+@enduml
