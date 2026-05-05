@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         self.actionInsertData = QAction(MainWindow)
         self.actionInsertData.setObjectName(u"actionInsertData")
         self.actionInsertData.setCheckable(True)
-        self.actionInsertData.setChecked(True)
+        self.actionInsertData.setChecked(False)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_3 = QVBoxLayout(self.centralwidget)
@@ -195,7 +195,7 @@ class Ui_MainWindow(object):
         self.radioBtnFullFile.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0446\u0435\u043d\u043d\u044b\u0439 \u0444\u0430\u0439\u043b", None))
         self.radioBtnULFile.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043b\u044c\u044f\u043d\u043e\u0432\u0441\u043a\u0438\u0439 \u0444\u0430\u0439\u043b", None))
         self.labelStatus.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0436\u0438\u0434\u0430\u043d\u0438\u0435 \u043d\u0430\u0447\u0430\u043b\u0430 \u0440\u0430\u0431\u043e\u0442\u044b...", None))
-        self.btnDoFormatToCSV.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431\u0440\u0430\u0431\u043e\u0442\u0430\u0442\u044c \u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0432 \u0411\u0414", None))
+        self.btnDoFormatToCSV.setText(QCoreApplication.translate("MainWindow", u"Обработать", None))
         self.menu_settings.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
         self.menu_file.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
     # retranslateUi
